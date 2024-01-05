@@ -112,13 +112,6 @@ public class Usuario extends Pessoa {
         return matcher.matches();
     }
 
-    public void alterarSenha(String senhaAntiga, String senhaNova) {
-        if (this.getSenha().equals(senhaAntiga)) {
-            this.setSenha(senhaNova);
-            this.setModificacao(LocalDateTime.now());
-        }
-    }
-
     public Long getId() {
         return id;
     }
