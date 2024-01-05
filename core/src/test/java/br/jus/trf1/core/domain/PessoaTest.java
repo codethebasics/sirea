@@ -14,6 +14,7 @@ class PessoaTest {
 
     @Test
     void adicionarDocumentoOficial() {
+        // given
         DocumentoOficial documentoOficial = new DocumentoOficial(
                 "111",
                 LocalDate.now(),
@@ -29,14 +30,16 @@ class PessoaTest {
                 null,
                 null);
 
+        // when
         pessoa.adicionarDocumentoOficial(documentoOficial);
-        System.out.println(pessoa);
 
+        // then
         assertNotNull(pessoa.getDocumentosOficiais());
     }
 
     @Test
     void removerDocumentoOficial() {
+        // given
         DocumentoOficial documentoOficial = new DocumentoOficial(
                 "111",
                 LocalDate.now(),
@@ -52,9 +55,11 @@ class PessoaTest {
                 null,
                 null);
 
+        // when
         pessoa.adicionarDocumentoOficial(documentoOficial);
         pessoa.removerDocumentoOficial(documentoOficial);
 
+        // then
         assertTrue(pessoa.getDocumentosOficiais().isEmpty());
     }
 }

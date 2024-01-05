@@ -3,10 +3,12 @@ package br.jus.trf1.core.domain;
 import br.jus.trf1.core.enums.PermissaoEnum;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author bruno.carneiro (tr301605)
@@ -37,7 +39,7 @@ public class Usuario extends Pessoa {
 
         this.permissoes = new HashSet<>();
         this.ativo = false;
-        this.permissoes.add(new Permissao(PermissaoEnum.GUEST));
+        this.permissoes.add(new Permissao(PermissaoEnum.CADEXT));
     }
 
     public Usuario(String nome,
@@ -61,7 +63,7 @@ public class Usuario extends Pessoa {
         this.senha = senha;
         this.ativo = false;
         this.permissoes = new HashSet<>();
-        this.permissoes.add(new Permissao(PermissaoEnum.GUEST));
+        this.permissoes.add(new Permissao(PermissaoEnum.CADEXT));
     }
 
     public Usuario(
@@ -87,7 +89,27 @@ public class Usuario extends Pessoa {
         this.usuario = usuario;
         this.senha = senha;
         this.ativo = ativo;
-        this.permissoes = permissoes;
+        this.permissoes = Objects.nonNull(permissoes)
+            ? permissoes
+            : new HashSet<>();
+    }
+
+    public void alterarSenha(String senhaAntiga, String senhaNova) {
+        if (!this.validarSenha(senhaNova)) {
+            throw new RuntimeException("A senha informada não atende aos parâmetros de segurança");
+        }
+        if (!this.getSenha().equals(senhaAntiga)) {
+            throw new RuntimeException("A senha atual informada é inválida");
+        }
+        this.setSenha(senhaNova);
+        this.setModificacao(LocalDateTime.now());
+    }
+
+    private boolean validarSenha(String senha) {
+        String regex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@#$%^&+=!])(?=\\S+$).{8,}$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(senha);
+        return matcher.matches();
     }
 
     public Long getId() {
@@ -110,7 +132,7 @@ public class Usuario extends Pessoa {
         return senha;
     }
 
-    public void setSenha(String senha) {
+    private void setSenha(String senha) {
         if (senha == null || senha.isEmpty()) {
             throw new RuntimeException("A senha do usuário deve ser informada");
         }
