@@ -1,6 +1,8 @@
 package br.jus.trf1.core.enums;
 
 /**
+ * Define as regiões do Brasil
+ *
  * @author bruno.carneiro (tr301605)
  */
 public enum RegiaoEnum {

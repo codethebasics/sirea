@@ -7,6 +7,8 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 /**
+ * Representa um documento oficial emitido por órgão federal
+ *
  * @author bruno.carneiro (tr301605)
  */
 public class DocumentoOficial {

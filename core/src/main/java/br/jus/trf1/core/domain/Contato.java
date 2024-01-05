@@ -3,11 +3,13 @@ package br.jus.trf1.core.domain;
 import br.jus.trf1.core.enums.DDDEnum;
 
 import java.util.Objects;
-import java.util.function.Predicate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
+ * Representa os contatos de uma {@link Pessoa}
+ *
+ *
  * @author bruno.carneiro (tr301605)
  */
 public class Contato {
