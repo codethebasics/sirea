@@ -4,6 +4,7 @@ package br.jus.trf1.core.enums;
  * @author bruno.carneiro (tr301605)
  */
 public enum PermissaoEnum {
+    GUEST("GUEST", "Usuário não autenticado"),
     ADVFUNC("ADVFUNC", "Funcionários de escritórios de advocacia"),
     ADMTRF1("ADMTRF1", "Administrador"),
     ADV("ADV", "Advogados"),

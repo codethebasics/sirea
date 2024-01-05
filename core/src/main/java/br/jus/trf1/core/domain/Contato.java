@@ -2,6 +2,8 @@ package br.jus.trf1.core.domain;
 
 import br.jus.trf1.core.enums.DDDEnum;
 
+import java.util.Objects;
+import java.util.function.Predicate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -20,10 +22,10 @@ public class Contato {
     }
 
     public Contato(DDDEnum ddd, String fixo, String movel, String email) {
-        this.ddd = ddd;
-        this.fixo = fixo;
-        this.movel = movel;
-        this.email = email;
+        this.setDdd(ddd);
+        this.setFixo(fixo);
+        this.setMovel(movel);
+        this.setEmail(email);
     }
 
     public Long getId() {
@@ -47,8 +49,9 @@ public class Contato {
     }
 
     public void setFixo(String fixo) {
-        if (fixo.length() == 0 || fixo.length() > 8) {
-            throw new RuntimeException("O número do telefone fixo deve ter 8 dígitos");
+        final int FIXO_LENGTH = 8;
+        if (fixo.length() != FIXO_LENGTH) {
+            throw new RuntimeException("O número do telefone fixo deve ter " + FIXO_LENGTH + " dígitos");
         }
         this.fixo = fixo;
     }
@@ -58,7 +61,9 @@ public class Contato {
     }
 
     public void setMovel(String movel) {
-        if (movel.length() == 0 || movel.length() > 9) {
+        final int MOVEL_MIN_LENGTH = 8;
+        final int MOVEL_MAX_LENGTH = 9;
+        if (movel.length() != MOVEL_MIN_LENGTH && movel.length() != MOVEL_MAX_LENGTH) {
             throw new RuntimeException("O número do telefone fixo deve ter 9 dígitos");
         }
         this.movel = movel;
@@ -76,5 +81,29 @@ public class Contato {
             throw new RuntimeException("O email informado é inválido");
         }
         this.email = email;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Contato contato = (Contato) o;
+        return Objects.equals(id, contato.id) && ddd == contato.ddd && Objects.equals(fixo, contato.fixo) && Objects.equals(movel, contato.movel) && Objects.equals(email, contato.email);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, ddd, fixo, movel, email);
+    }
+
+    @Override
+    public String toString() {
+        return "Contato{" +
+                "id=" + id +
+                ", ddd=" + ddd +
+                ", fixo='" + fixo + '\'' +
+                ", movel='" + movel + '\'' +
+                ", email='" + email + '\'' +
+                '}';
     }
 }
