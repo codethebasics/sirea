@@ -3,8 +3,8 @@ package br.jus.trf1.core.domain;
 import br.jus.trf1.core.enums.PermissaoEnum;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -90,6 +90,13 @@ public class Usuario extends Pessoa {
         this.permissoes = permissoes;
     }
 
+    public void alterarSenha(String senhaAntiga, String senhaNova) {
+        if (this.getSenha().equals(senhaAntiga)) {
+            this.setSenha(senhaNova);
+            this.setModificacao(LocalDateTime.now());
+        }
+    }
+
     public Long getId() {
         return id;
     }
@@ -110,7 +117,7 @@ public class Usuario extends Pessoa {
         return senha;
     }
 
-    public void setSenha(String senha) {
+    private void setSenha(String senha) {
         if (senha == null || senha.isEmpty()) {
             throw new RuntimeException("A senha do usuário deve ser informada");
         }
