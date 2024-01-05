@@ -5,6 +5,8 @@ import br.jus.trf1.core.enums.PermissaoEnum;
 import java.util.Objects;
 
 /**
+ * Representa a permissão de um {@link Usuario} do sistema
+ *
  * @author bruno.carneiro (tr301605)
  */
 public class Permissao {
@@ -15,12 +17,13 @@ public class Permissao {
         this.permissao = permissao;
     }
 
-    public Integer getId() {
-        return id;
+    public Permissao(Integer id, PermissaoEnum permissao) {
+        this.id = id;
+        this.permissao = permissao;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public Integer getId() {
+        return id;
     }
 
     public PermissaoEnum getPermissao() {

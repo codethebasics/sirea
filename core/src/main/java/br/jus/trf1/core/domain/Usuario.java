@@ -11,6 +11,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
+ * Representa um usuário de sistema.
+ *
  * @author bruno.carneiro (tr301605)
  */
 public class Usuario extends Pessoa {
@@ -91,16 +93,8 @@ public class Usuario extends Pessoa {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public String getUsuario() {
         return usuario;
-    }
-
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
     }
 
     public String getSenha() {
@@ -123,6 +117,7 @@ public class Usuario extends Pessoa {
 
     public void setAtivo(Boolean ativo) {
         this.ativo = ativo;
+        this.setModificacao(LocalDateTime.now());
     }
 
     public Set<Permissao> getPermissoes() {
@@ -131,6 +126,7 @@ public class Usuario extends Pessoa {
 
     public void setPermissoes(Set<Permissao> permissoes) {
         this.permissoes = permissoes;
+        this.setModificacao(LocalDateTime.now());
     }
 
     @Override
@@ -139,12 +135,22 @@ public class Usuario extends Pessoa {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         Usuario usuario1 = (Usuario) o;
-        return Objects.equals(id, usuario1.id) && Objects.equals(usuario, usuario1.usuario) && Objects.equals(senha, usuario1.senha) && Objects.equals(ativo, usuario1.ativo) && Objects.equals(permissoes, usuario1.permissoes);
+        return Objects.equals(id, usuario1.id)
+                && Objects.equals(usuario, usuario1.usuario)
+                && Objects.equals(senha, usuario1.senha)
+                && Objects.equals(ativo, usuario1.ativo)
+                && Objects.equals(permissoes, usuario1.permissoes);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), id, usuario, senha, ativo, permissoes);
+        return Objects.hash(
+                super.hashCode(),
+                id,
+                usuario,
+                senha,
+                ativo,
+                permissoes);
     }
 
     @Override
