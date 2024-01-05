@@ -20,28 +20,6 @@ public class Usuario extends Pessoa {
     private Boolean ativo;
     private Set<Permissao> permissoes;
 
-    public Usuario(
-            String nome,
-            LocalDate dataNascimento,
-            String naturalidade,
-            String nacionalidade,
-            Set<DocumentoOficial> documentosOficiais,
-            Contato contato,
-            Endereco endereco) {
-        super(
-                nome,
-                dataNascimento,
-                naturalidade,
-                nacionalidade,
-                documentosOficiais,
-                contato,
-                endereco);
-
-        this.permissoes = new HashSet<>();
-        this.ativo = false;
-        this.permissoes.add(new Permissao(PermissaoEnum.CADEXT));
-    }
-
     public Usuario(String nome,
                    LocalDate dataNascimento,
                    String naturalidade,
@@ -60,7 +38,7 @@ public class Usuario extends Pessoa {
                 contato,
                 endereco);
         this.usuario = usuario;
-        this.senha = senha;
+        this.setSenha(senha);
         this.ativo = false;
         this.permissoes = new HashSet<>();
         this.permissoes.add(new Permissao(PermissaoEnum.CADEXT));
@@ -95,9 +73,6 @@ public class Usuario extends Pessoa {
     }
 
     public void alterarSenha(String senhaAntiga, String senhaNova) {
-        if (!this.validarSenha(senhaNova)) {
-            throw new RuntimeException("A senha informada não atende aos parâmetros de segurança");
-        }
         if (!this.getSenha().equals(senhaAntiga)) {
             throw new RuntimeException("A senha atual informada é inválida");
         }
@@ -135,6 +110,9 @@ public class Usuario extends Pessoa {
     private void setSenha(String senha) {
         if (senha == null || senha.isEmpty()) {
             throw new RuntimeException("A senha do usuário deve ser informada");
+        }
+        if (!this.validarSenha(senha)) {
+            throw new RuntimeException("A senha informada não atende aos parâmetros de segurança");
         }
         this.senha = senha;
     }
