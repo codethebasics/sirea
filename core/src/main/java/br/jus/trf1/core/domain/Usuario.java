@@ -1,6 +1,7 @@
 package br.jus.trf1.core.domain;
 
 import br.jus.trf1.core.enums.PermissaoEnum;
+import br.jus.trf1.core.exception.InvalidPasswordException;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -82,11 +83,13 @@ public class Usuario extends Pessoa {
         this.setModificacao(LocalDateTime.now());
     }
 
-    private boolean validarSenha(String senha) {
+    private void validarSenha(String senha) {
         String regex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@#$%^&+=!])(?=\\S+$).{8,}$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(senha);
-        return matcher.matches();
+        if (!matcher.matches()) {
+            throw new InvalidPasswordException("A senha informada não atende aos parâmetros de segurança");
+        }
     }
 
     public Long getId() {
@@ -103,11 +106,9 @@ public class Usuario extends Pessoa {
 
     private void setSenha(String senha) {
         if (senha == null || senha.isEmpty()) {
-            throw new RuntimeException("A senha do usuário deve ser informada");
+            throw new InvalidPasswordException("A senha do usuário deve ser informada");
         }
-        if (!this.validarSenha(senha)) {
-            throw new RuntimeException("A senha informada não atende aos parâmetros de segurança");
-        }
+        this.validarSenha(senha);
         this.senha = senha;
     }
 
