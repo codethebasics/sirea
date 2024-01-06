@@ -4,6 +4,8 @@ import br.jus.trf1.core.enums.DDDEnum;
 import br.jus.trf1.core.enums.OrgaoEmissorEnum;
 import br.jus.trf1.core.enums.TipoDocumentoOficialEnum;
 import br.jus.trf1.core.enums.UnidadeFederativaEnum;
+import br.jus.trf1.core.exception.InvalidEmailException;
+import br.jus.trf1.core.exception.InvalidPasswordException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -26,7 +28,7 @@ class ContatoTest {
         Contato contato = new Contato();
 
         // when / then
-        assertThrows(RuntimeException.class, () -> {
+        assertThrows(InvalidEmailException.class, () -> {
             contato.setEmail(emailInvalido);
         }, "Um email inválido não deveria ser cadastrado");
     }

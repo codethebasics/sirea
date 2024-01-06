@@ -1,6 +1,8 @@
 package br.jus.trf1.core.enums;
 
 /**
+ * Define a lista de permissões do sistema
+ *
  * @author bruno.carneiro (tr301605)
  */
 public enum PermissaoEnum {

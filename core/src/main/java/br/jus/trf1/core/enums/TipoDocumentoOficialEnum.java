@@ -1,5 +1,10 @@
 package br.jus.trf1.core.enums;
 
+/**
+ * Define os tipos de documentos oficiais expedidos pelo governo brasileiro
+ *
+ * @author bruno.carneiro(tr301605)
+ */
 public enum TipoDocumentoOficialEnum {
     RG("Registro Geral"),
     RNE("Registro Nacional de Estrangeiro"),

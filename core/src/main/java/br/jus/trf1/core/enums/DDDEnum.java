@@ -1,6 +1,8 @@
 package br.jus.trf1.core.enums;
 
 /**
+ * Define o código DDD de cada região
+ *
  * @author bruno.carneiro (tr301605)
  */
 public enum DDDEnum {

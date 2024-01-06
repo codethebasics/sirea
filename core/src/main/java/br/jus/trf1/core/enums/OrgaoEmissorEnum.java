@@ -1,5 +1,10 @@
 package br.jus.trf1.core.enums;
 
+/**
+ * Define a lista de órgãos emissores federais
+ *
+ * @author bruno.carneiro (tr301605)
+ */
 public enum OrgaoEmissorEnum {
     ABNC("ABNC", "Academia Brasileira de Neurocirurgia"),
     AGU("AGU", "Advocacia-Geral da União"),

@@ -8,6 +8,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
+ * Representa uma pessoa dentro do sistema, seja ela um {@link Usuario} ou não
+ *
  * @author bruno.carneiro (tr301605)
  */
 public class Pessoa {

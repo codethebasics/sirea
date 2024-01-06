@@ -1,13 +1,17 @@
 package br.jus.trf1.core.domain;
 
 import br.jus.trf1.core.enums.DDDEnum;
+import br.jus.trf1.core.exception.InvalidEmailException;
+import br.jus.trf1.core.exception.InvalidPhoneNumberException;
 
 import java.util.Objects;
-import java.util.function.Predicate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
+ * Representa os contatos de uma {@link Pessoa}
+ *
+ *
  * @author bruno.carneiro (tr301605)
  */
 public class Contato {
@@ -51,7 +55,7 @@ public class Contato {
     public void setFixo(String fixo) {
         final int FIXO_LENGTH = 8;
         if (fixo.length() != FIXO_LENGTH) {
-            throw new RuntimeException("O número do telefone fixo deve ter " + FIXO_LENGTH + " dígitos");
+            throw new InvalidPhoneNumberException("O número do telefone fixo deve ter " + FIXO_LENGTH + " dígitos");
         }
         this.fixo = fixo;
     }
@@ -64,7 +68,7 @@ public class Contato {
         final int MOVEL_MIN_LENGTH = 8;
         final int MOVEL_MAX_LENGTH = 9;
         if (movel.length() != MOVEL_MIN_LENGTH && movel.length() != MOVEL_MAX_LENGTH) {
-            throw new RuntimeException("O número do telefone fixo deve ter 9 dígitos");
+            throw new InvalidPhoneNumberException("O número do telefone fixo deve ter 9 dígitos");
         }
         this.movel = movel;
     }
@@ -78,7 +82,7 @@ public class Contato {
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(email);
         if (!matcher.matches()) {
-            throw new RuntimeException("O email informado é inválido");
+            throw new InvalidEmailException("O email informado é inválido");
         }
         this.email = email;
     }
