@@ -18,6 +18,21 @@
 	</properties>
 	<dependencies>
 		<dependency>
+			<groupId>trf1.jus.br</groupId>
+			<artifactId>application</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>trf1.jus.br</groupId>
+			<artifactId>usecase</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>trf1.jus.br</groupId>
+			<artifactId>core</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
