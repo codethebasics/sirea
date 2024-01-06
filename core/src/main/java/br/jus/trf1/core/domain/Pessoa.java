@@ -149,6 +149,9 @@ public class Pessoa {
     }
 
     public void adicionarDocumentoOficial(DocumentoOficial documentoOficial) {
+        if (Objects.isNull(documentoOficial)) {
+            throw new RuntimeException("O documento não pode ser nulo");
+        }
         this.documentosOficiais.add(documentoOficial);
     }
 
