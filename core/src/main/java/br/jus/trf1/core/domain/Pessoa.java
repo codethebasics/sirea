@@ -34,6 +34,9 @@ public class Pessoa {
             Set<DocumentoOficial> documentosOficiais,
             Contato contato,
             Endereco endereco) {
+
+        System.out.println("Core::Pessoa::new");
+
         this.nome = nome;
         this.dataNascimento = dataNascimento;
         this.naturalidade = naturalidade;

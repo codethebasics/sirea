@@ -1,6 +1,8 @@
 package br.jus.trf1.usecase.usuario;
 
 import br.jus.trf1.core.domain.Usuario;
+import br.jus.trf1.usecase.usuario.exceptions.BuscarUsuarioException;
+import br.jus.trf1.usecase.usuario.exceptions.CriarUsuarioException;
 
 /**
  * Fluxo principal
@@ -19,5 +21,5 @@ import br.jus.trf1.core.domain.Usuario;
  * @author bruno.carneiro (tr301605)
  */
 public interface CriarUsuarioUC {
-    Usuario criar(Usuario usuario) throws RuntimeException;
+    Usuario criar(Usuario usuario) throws CriarUsuarioException, BuscarUsuarioException;
 }
