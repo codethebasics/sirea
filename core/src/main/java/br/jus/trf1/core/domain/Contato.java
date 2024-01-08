@@ -15,7 +15,6 @@ import java.util.regex.Pattern;
  * @author bruno.carneiro (tr301605)
  */
 public class Contato {
-    private Long id;
     private DDDEnum ddd;
     private String fixo;
     private String movel;
@@ -30,14 +29,6 @@ public class Contato {
         this.setFixo(fixo);
         this.setMovel(movel);
         this.setEmail(email);
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public DDDEnum getDdd() {
@@ -92,19 +83,18 @@ public class Contato {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Contato contato = (Contato) o;
-        return Objects.equals(id, contato.id) && ddd == contato.ddd && Objects.equals(fixo, contato.fixo) && Objects.equals(movel, contato.movel) && Objects.equals(email, contato.email);
+        return ddd == contato.ddd && Objects.equals(movel, contato.movel) && Objects.equals(email, contato.email);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, ddd, fixo, movel, email);
+        return Objects.hash(ddd, movel, email);
     }
 
     @Override
     public String toString() {
         return "Contato{" +
-                "id=" + id +
-                ", ddd=" + ddd +
+                "ddd=" + ddd +
                 ", fixo='" + fixo + '\'' +
                 ", movel='" + movel + '\'' +
                 ", email='" + email + '\'' +

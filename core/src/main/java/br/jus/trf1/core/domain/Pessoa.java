@@ -13,7 +13,6 @@ import java.util.stream.Collectors;
  * @author bruno.carneiro (tr301605)
  */
 public class Pessoa {
-    private Long id;
     private String nome;
     private String nomeSocial;
     private LocalDate dataNascimento;
@@ -35,8 +34,6 @@ public class Pessoa {
             Contato contato,
             Endereco endereco) {
 
-        System.out.println("Core::Pessoa::new");
-
         this.nome = nome;
         this.dataNascimento = dataNascimento;
         this.naturalidade = naturalidade;
@@ -52,13 +49,6 @@ public class Pessoa {
                 : new HashSet<>();
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getNome() {
         return nome;
@@ -157,7 +147,7 @@ public class Pessoa {
 
     public void removerDocumentoOficial(DocumentoOficial documentoOficial) {
         this.setDocumentosOficiais(this.documentosOficiais.stream()
-                .filter(d -> !Objects.equals(d.getId(), documentoOficial.getId()))
+                .filter(d -> !Objects.equals(d, documentoOficial))
                 .collect(Collectors.toSet()));
     }
 
@@ -166,19 +156,18 @@ public class Pessoa {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Pessoa pessoa = (Pessoa) o;
-        return Objects.equals(id, pessoa.id) && Objects.equals(nome, pessoa.nome) && Objects.equals(nomeSocial, pessoa.nomeSocial) && Objects.equals(dataNascimento, pessoa.dataNascimento) && Objects.equals(dataFalecimento, pessoa.dataFalecimento) && Objects.equals(naturalidade, pessoa.naturalidade) && Objects.equals(nacionalidade, pessoa.nacionalidade) && Objects.equals(criacao, pessoa.criacao) && Objects.equals(modificacao, pessoa.modificacao) && Objects.equals(documentosOficiais, pessoa.documentosOficiais) && Objects.equals(contato, pessoa.contato) && Objects.equals(endereco, pessoa.endereco);
+        return Objects.equals(nome, pessoa.nome) && Objects.equals(dataNascimento, pessoa.dataNascimento) && Objects.equals(criacao, pessoa.criacao);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, nome, nomeSocial, dataNascimento, dataFalecimento, naturalidade, nacionalidade, criacao, modificacao, documentosOficiais, contato, endereco);
+        return Objects.hash(nome, dataNascimento, criacao);
     }
 
     @Override
     public String toString() {
         return "Pessoa{" +
-                "id=" + id +
-                ", nome='" + nome + '\'' +
+                "nome='" + nome + '\'' +
                 ", nomeSocial='" + nomeSocial + '\'' +
                 ", dataNascimento=" + dataNascimento +
                 ", dataFalecimento=" + dataFalecimento +

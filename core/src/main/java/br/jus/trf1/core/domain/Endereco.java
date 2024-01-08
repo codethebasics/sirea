@@ -2,7 +2,6 @@ package br.jus.trf1.core.domain;
 
 import br.jus.trf1.core.enums.UnidadeFederativaEnum;
 
-import java.time.LocalDateTime;
 import java.util.Objects;
 
 /**
@@ -11,7 +10,6 @@ import java.util.Objects;
  * @author bruno.carneiro (tr301605)
  */
 public class Endereco {
-    private Long id;
     private String cep;
     private String logradouro;
     private String complemento;
@@ -51,10 +49,6 @@ public class Endereco {
         this.uf = uf;
     }
 
-
-    public Long getId() {
-        return id;
-    }
 
     public String getCep() {
         return cep;
@@ -109,19 +103,18 @@ public class Endereco {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Endereco endereco = (Endereco) o;
-        return Objects.equals(id, endereco.id) && Objects.equals(cep, endereco.cep) && Objects.equals(logradouro, endereco.logradouro) && Objects.equals(complemento, endereco.complemento) && Objects.equals(bairro, endereco.bairro) && Objects.equals(localidade, endereco.localidade) && uf == endereco.uf;
+        return Objects.equals(cep, endereco.cep) && Objects.equals(logradouro, endereco.logradouro) && Objects.equals(complemento, endereco.complemento) && Objects.equals(bairro, endereco.bairro) && Objects.equals(localidade, endereco.localidade) && uf == endereco.uf;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, cep, logradouro, complemento, bairro, localidade, uf);
+        return Objects.hash(cep, logradouro, complemento, bairro, localidade, uf);
     }
 
     @Override
     public String toString() {
         return "Endereco{" +
-                "id=" + id +
-                ", cep='" + cep + '\'' +
+                "cep='" + cep + '\'' +
                 ", logradouro='" + logradouro + '\'' +
                 ", complemento='" + complemento + '\'' +
                 ", bairro='" + bairro + '\'' +

@@ -10,20 +10,10 @@ import java.util.Objects;
  * @author bruno.carneiro (tr301605)
  */
 public class Permissao {
-    private Integer id;
     private PermissaoEnum permissao;
 
     public Permissao(PermissaoEnum permissao) {
         this.permissao = permissao;
-    }
-
-    public Permissao(Integer id, PermissaoEnum permissao) {
-        this.id = id;
-        this.permissao = permissao;
-    }
-
-    public Integer getId() {
-        return id;
     }
 
     public PermissaoEnum getPermissao() {
@@ -39,19 +29,18 @@ public class Permissao {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Permissao permissao1 = (Permissao) o;
-        return Objects.equals(id, permissao1.id) && permissao == permissao1.permissao;
+        return permissao == permissao1.permissao;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, permissao);
+        return Objects.hash(permissao);
     }
 
     @Override
     public String toString() {
         return "Permissao{" +
-                "id=" + id +
-                ", permissao=" + permissao +
+                "permissao=" + permissao +
                 '}';
     }
 }

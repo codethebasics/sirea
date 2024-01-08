@@ -12,7 +12,6 @@ import java.util.Objects;
  * @author bruno.carneiro (tr301605)
  */
 public class DocumentoOficial {
-    Long id;
     private String numero;
     private LocalDate emissao;
     private LocalDate vencimento;
@@ -43,13 +42,6 @@ public class DocumentoOficial {
         this.tipoDocumentoOficial = tipoDocumentoOficial;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getNumero() {
         return numero;
@@ -110,8 +102,7 @@ public class DocumentoOficial {
     @Override
     public String toString() {
         return "DocumentoOficial{" +
-                "id=" + id +
-                ", numero='" + numero + '\'' +
+                "numero='" + numero + '\'' +
                 ", emissao=" + emissao +
                 ", vencimento=" + vencimento +
                 ", orgaoEmissor=" + orgaoEmissor +

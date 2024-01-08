@@ -20,7 +20,6 @@ public class CriarPessoaService implements CriarPessoaGateway {
         try {
             System.out.println("Infrastructure::CriarPessoaService.criar");
             System.out.println(pessoa);
-            this.repository.findById(pessoa.getId());
         } catch (Exception e) {
             System.out.println("Erro durante criação de pessoa");
             e.printStackTrace();

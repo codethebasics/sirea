@@ -17,8 +17,7 @@ import java.util.regex.Pattern;
  * @author bruno.carneiro (tr301605)
  */
 public class Usuario extends Pessoa {
-    private Long id;
-    private String usuario;
+    private final String usuario;
     private String senha;
     private Boolean ativo;
     private Set<Permissao> permissoes;
@@ -92,9 +91,6 @@ public class Usuario extends Pessoa {
         }
     }
 
-    public Long getId() {
-        return id;
-    }
 
     public String getUsuario() {
         return usuario;
@@ -148,29 +144,18 @@ public class Usuario extends Pessoa {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         Usuario usuario1 = (Usuario) o;
-        return Objects.equals(id, usuario1.id)
-                && Objects.equals(usuario, usuario1.usuario)
-                && Objects.equals(senha, usuario1.senha)
-                && Objects.equals(ativo, usuario1.ativo)
-                && Objects.equals(permissoes, usuario1.permissoes);
+        return Objects.equals(usuario, usuario1.usuario);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(
-                super.hashCode(),
-                id,
-                usuario,
-                senha,
-                ativo,
-                permissoes);
+        return Objects.hash(super.hashCode(), usuario);
     }
 
     @Override
     public String toString() {
         return "Usuario{" +
-                "id=" + id +
-                ", usuario='" + usuario + '\'' +
+                "usuario='" + usuario + '\'' +
                 ", senha='" + senha + '\'' +
                 ", ativo=" + ativo +
                 ", permissoes=" + permissoes +
