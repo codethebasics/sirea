@@ -1,5 +1,7 @@
 package br.jus.trf1.core.domain;
 
+import br.jus.trf1.core.enums.PermissaoEnum;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
@@ -34,5 +36,69 @@ class UsuarioTest {
 
         // then
         assertEquals(senhaNova, usuario.getSenha());
+    }
+
+    @Test
+    @DisplayName("Dado um usuário e uma permissão, quando adicionar permissão ao usuário então espera que a permissão seja adicionada")
+    public void deveAdicionarPermissao() {
+        // given
+        Usuario usuario = new Usuario(
+                "Bruno Ferreira",
+                LocalDate.of(1987, 6, 29),
+                "Brasileiro",
+                "Brasília",
+
+                null,
+                null,
+                null,
+                "bruno.carneiro",
+                "Abcd123!@#");
+
+        Permissao cadext = new Permissao(PermissaoEnum.CADEXT);
+        Permissao adm = new Permissao(PermissaoEnum.ADMTRF1);
+
+        // when
+        usuario.adicionarPermissao(cadext);
+        usuario.adicionarPermissao(adm);
+
+        // then
+        assertAll("Verificando permissões adicionadas", () -> {
+            assertTrue(usuario.getPermissoes().stream().anyMatch(p -> p.getPermissao().equals(PermissaoEnum.CADEXT)));
+            assertTrue(usuario.getPermissoes().stream().anyMatch(p -> p.getPermissao().equals(PermissaoEnum.ADMTRF1)));
+        });
+    }
+
+    @Test
+    @DisplayName("Dado um usuário e uma permissão, quando remover permissão do usuário então espera que a permissão seja removida")
+    public void deveRemoverPermissao() {
+        // given
+        Usuario usuario = new Usuario(
+                "Bruno Ferreira",
+                LocalDate.of(1987, 6, 29),
+                "Brasileiro",
+                "Brasília",
+
+                null,
+                null,
+                null,
+                "bruno.carneiro",
+                "Abcd123!@#");
+
+        Permissao cadext = new Permissao(PermissaoEnum.CADEXT);
+        Permissao adm = new Permissao(PermissaoEnum.ADMTRF1);
+
+        // when / then
+        assertAll("Verificando permissões adicionadas", () -> {
+            usuario.adicionarPermissao(cadext);
+            usuario.adicionarPermissao(adm);
+
+            assertTrue(usuario.getPermissoes().stream().anyMatch(p -> p.getPermissao().equals(PermissaoEnum.CADEXT)));
+            assertTrue(usuario.getPermissoes().stream().anyMatch(p -> p.getPermissao().equals(PermissaoEnum.ADMTRF1)));
+
+            usuario.removerPermissao(cadext);
+            usuario.removerPermissao(adm);
+
+            assertTrue(usuario.getPermissoes().isEmpty(), "Espera-se que a lista esteja vazia");
+        });
     }
 }

@@ -125,9 +125,21 @@ public class Usuario extends Pessoa {
         return permissoes;
     }
 
-    public void setPermissoes(Set<Permissao> permissoes) {
+    private void setPermissoes(Set<Permissao> permissoes) {
         this.permissoes = permissoes;
         this.setModificacao(LocalDateTime.now());
+    }
+
+    public void adicionarPermissao(Permissao permissao) {
+        if (Objects.isNull(permissao))
+            throw new RuntimeException("A permissão não pode ser nula");
+        this.permissoes.add(permissao);
+    }
+
+    public void removerPermissao(Permissao permissao) {
+        if (Objects.isNull(permissao))
+            throw new RuntimeException("A permissão não pode ser nula");
+        this.permissoes.remove(permissao);
     }
 
     @Override
