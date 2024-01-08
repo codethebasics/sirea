@@ -96,12 +96,15 @@ public class DocumentoOficial {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         DocumentoOficial that = (DocumentoOficial) o;
-        return Objects.equals(id, that.id) && Objects.equals(numero, that.numero) && Objects.equals(emissao, that.emissao) && Objects.equals(vencimento, that.vencimento) && orgaoEmissor == that.orgaoEmissor && tipoDocumentoOficial == that.tipoDocumentoOficial;
+        return Objects.equals(numero, that.numero)
+                && Objects.equals(emissao, that.emissao)
+                && orgaoEmissor == that.orgaoEmissor
+                && tipoDocumentoOficial == that.tipoDocumentoOficial;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, numero, emissao, vencimento, orgaoEmissor, tipoDocumentoOficial);
+        return Objects.hash(numero, emissao, orgaoEmissor, tipoDocumentoOficial);
     }
 
     @Override
