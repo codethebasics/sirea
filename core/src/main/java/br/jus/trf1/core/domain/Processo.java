@@ -62,7 +62,6 @@ public class Processo {
         this.setRegiao(regiao);
         this.setOrigemNoPrimeiroGrau(origemNoPrimeiroGrau);
         this.setNumeroProcesso();
-        this.validarProcesso();
     }
 
     public String getNumeroSequencial() {
@@ -177,11 +176,16 @@ public class Processo {
     }
 
     public void setNumeroProcesso() {
-        this.numeroProcesso = this.numeroProcesso +
+        this.numeroProcesso = this.numeroSequencial +
                 this.digitoVerificador +
                 this.anoDeAjuizamento +
                 this.orgaoDoPoderJudiciario.getCodigo() +
+                this.regiao.getCodigo() +
                 this.origemNoPrimeiroGrau;
+
+        String numeroProcessoPreparado = Modulo97Base10.preparacao(this.numeroProcesso);
+        if (!Modulo97Base10.calculo(numeroProcessoPreparado, this.digitoVerificador))
+            throw new RuntimeException("Número de processo inválido");
     }
 
     /**
@@ -190,19 +194,52 @@ public class Processo {
      * do algoritmo Módulo 97 Base 10, conforme Norma ISO 7064:2003,
      * nos termos das instruções constantes do Anexo VIII desta Resolução.
      */
-    private void validarProcesso() {
+    public static class Modulo97Base10 {
 
-        // Acrescenta "00" ao final do número
-        String numeroExtendido = this.numeroProcesso + "00";
+        public static String preparacao(String numeroProcessoUnico) {
+            // Remover formatação
+            numeroProcessoUnico = numeroProcessoUnico
+                    .replaceAll("\\.", "")
+                    .replaceAll("-", "");
 
-        // Converte o número extendido para BigInteger
-        BigInteger bigInteger = new BigInteger(numeroExtendido);
+            // Verifica se o processo contém 20 dígitos
+            if (numeroProcessoUnico.length() != 20)
+                throw new RuntimeException("O número do processo deve ter 20 dígitos");
 
-        // Calcula o módulo 97
-        BigInteger modulo97 = bigInteger.mod(BigInteger.valueOf(97));
+            // Remove o dígito verificador do número do processo e o armazena
+            String numeroProcessoSemDigitoVerificador =
+                    numeroProcessoUnico.substring(0, 7)
+                    .concat(numeroProcessoUnico.substring(9));
 
-        // Verifica se o resultado do módulo 97 é igual a 1, se não for lança exception
-        if (!modulo97.equals(BigInteger.ONE))
-            throw new RuntimeException("Número de processo inválido");
+            // Repete os últimos dois dígitos, concatenando-os do número do processo
+            String numeroProcessoPreparado = numeroProcessoSemDigitoVerificador
+                    .concat(numeroProcessoSemDigitoVerificador.substring(16, 18));
+
+            return numeroProcessoPreparado;
+        }
+
+        public static boolean calculo(String numeroProcessoPreparado, String digitoVerificador) {
+            if (numeroProcessoPreparado.isBlank())
+                throw new RuntimeException("O número do processo deve ser informado");
+
+            if (digitoVerificador.isBlank())
+                throw new RuntimeException("O digito verificador deve ser informado");
+
+            if (numeroProcessoPreparado.length() != 20)
+                throw new RuntimeException("O número do processo deve ser formado por 20 dígitos");
+
+            if (digitoVerificador.length() != 2)
+                throw new RuntimeException("O dígito verificador deve ser composto por 2 dígitos");
+
+            BigInteger numeroProcesso = new BigInteger(numeroProcessoPreparado);
+            BigInteger result = BigInteger.valueOf(98L).min(calcularMod97(numeroProcesso));
+
+            return result.equals(BigInteger.ONE) ;
+        }
+
+        public static BigInteger calcularMod97(BigInteger numero) {
+            return numero.mod(BigInteger.valueOf(97L));
+        }
     }
+
 }
