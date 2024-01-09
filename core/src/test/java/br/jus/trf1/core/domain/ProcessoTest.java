@@ -20,7 +20,7 @@ class ProcessoTest {
     @Test
     void dadoUmProcessoValido_quandoValidarProcesso_entaoRetornaTrue() {
 
-        // given 0033603-86.2022.4.01.8000
+        // given
         Processo processo = new Processo(
                 "0033603",
                 "86",
@@ -30,7 +30,7 @@ class ProcessoTest {
                 "8000");
 
         // when
-        Boolean isProcessoValid = processo.isNumeroProcessoValid();
+        boolean isProcessoValid = processo.isNumeroProcessoValid();
 
         // then
         assertTrue(isProcessoValid, "Espera-se que o processo seja válido");
