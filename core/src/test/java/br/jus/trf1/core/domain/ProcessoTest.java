@@ -88,4 +88,61 @@ class ProcessoTest {
                     "8000");
         }, "Espera-se que uma excetion seja lançada");
     }
+
+    @Test
+    void dadoUmNumeroDeProcessoCompleto_quandoObterNumeroDoProcessoFormatado_EntaoDeveRetornarNumeroProcessoFormatado() {
+
+        // given
+        Processo processo = new Processo(
+                "0033603",
+                "86",
+                "2022",
+                OrgaoJudiciarioEnum.JF,
+                RegiaoTRFEnum.TRF1,
+                "8000");
+
+        // when
+        String numeroProcessoFormatado = processo.getNumeroProcessoFormatado();
+
+        // then
+        assertEquals("0033603-86.2022.4.01.8000", numeroProcessoFormatado, "Espera-se que o número do processo esteja formatado");
+    }
+
+    @Test
+    void dadoUmNumeroDeProcessoCompleto_quandoObterNumeroDoProcessoSemZerosAEsquerda_entaoDeveRetornarNumeroProcessoSemZerosAEsquerda() {
+
+        // given
+        Processo processo = new Processo(
+                "0033603",
+                "86",
+                "2022",
+                OrgaoJudiciarioEnum.JF,
+                RegiaoTRFEnum.TRF1,
+                "8000");
+
+        // when
+        String numeroProcessoFormatado = processo.getNumeroProcessoSemZerosAEsquerda();
+
+        // then
+        assertEquals("336038620224018000", numeroProcessoFormatado, "Espera-se que o número do processo esteja formatado");
+    }
+
+    @Test
+    void dadoUmNumeroDeProcessoCompleto_quandoObterNumeroDoProcessoFormatadoSemZerosAEsquerda_entaoDeveRetornarNumeroProcessoFormatadoSemZerosAEsquerda() {
+
+        // given
+        Processo processo = new Processo(
+                "0033603",
+                "86",
+                "2022",
+                OrgaoJudiciarioEnum.JF,
+                RegiaoTRFEnum.TRF1,
+                "8000");
+
+        // when
+        String numeroProcessoFormatado = processo.getNumeroProcessoFormatadoSemZerosAEsquerda();
+
+        // then
+        assertEquals("33603-86.2022.4.01.8000", numeroProcessoFormatado, "Espera-se que o número do processo esteja formatado");
+    }
 }

@@ -172,7 +172,20 @@ public class Processo {
     }
 
     public String getNumeroProcessoFormatado() {
-        return numeroProcesso;
+        return this.numeroSequencial + "-" +
+                this.digitoVerificador + "." +
+                this.anoDeAjuizamento + "." +
+                this.orgaoDoPoderJudiciario.getCodigo() + "." +
+                this.regiao.getCodigo() + "." +
+                this.origemNoPrimeiroGrau;
+    }
+
+    public String getNumeroProcessoSemZerosAEsquerda() {
+        return this.getNumeroProcesso().replaceFirst("^0+", "");
+    }
+
+    public String getNumeroProcessoFormatadoSemZerosAEsquerda() {
+        return this.getNumeroProcessoFormatado().replaceFirst("^0+", "");
     }
 
     public void setNumeroProcesso() {
@@ -202,9 +215,7 @@ public class Processo {
 
         public static String preparacao(String numeroProcessoUnico) {
             // Remover formatação
-            numeroProcessoUnico = numeroProcessoUnico
-                    .replaceAll("\\.", "")
-                    .replaceAll("-", "");
+            numeroProcessoUnico = numeroProcessoUnico.replaceAll("[^0-9]", "");
 
             // Verifica se o processo contém 20 dígitos
             if (numeroProcessoUnico.length() != 20)
@@ -216,10 +227,8 @@ public class Processo {
                     .concat(numeroProcessoUnico.substring(9));
 
             // Repete os últimos dois dígitos, concatenando-os do número do processo
-            String numeroProcessoPreparado = numeroProcessoSemDigitoVerificador
+            return numeroProcessoSemDigitoVerificador
                     .concat(numeroProcessoUnico.substring(7, 9));
-
-            return numeroProcessoPreparado;
         }
 
         public static boolean calculo(String numeroProcessoPreparado, String digitoVerificador) {
