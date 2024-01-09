@@ -183,9 +183,13 @@ public class Processo {
                 this.regiao.getCodigo() +
                 this.origemNoPrimeiroGrau;
 
-        String numeroProcessoPreparado = Modulo97Base10.preparacao(this.numeroProcesso);
-        if (!Modulo97Base10.calculo(numeroProcessoPreparado, this.digitoVerificador))
+        if (!isNumeroProcessoValid())
             throw new RuntimeException("Número de processo inválido");
+    }
+
+    public boolean isNumeroProcessoValid() {
+        String numeroProcessoPreparado = Modulo97Base10.preparacao(this.numeroProcesso);
+        return Modulo97Base10.calculo(numeroProcessoPreparado, this.digitoVerificador);
     }
 
     /**
