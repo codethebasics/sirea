@@ -87,7 +87,7 @@ class ProcessoTest {
             new Processo(
                     "0025621",
                     "84",
-                    "2023",
+                    "2022",
                     OrgaoJudiciarioEnum.JF,
                     RegiaoTRFEnum.TRF1,
                     "8000");

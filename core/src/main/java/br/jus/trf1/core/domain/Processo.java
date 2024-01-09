@@ -213,7 +213,7 @@ public class Processo {
 
             // Repete os últimos dois dígitos, concatenando-os do número do processo
             String numeroProcessoPreparado = numeroProcessoSemDigitoVerificador
-                    .concat(numeroProcessoSemDigitoVerificador.substring(16, 18));
+                    .concat(numeroProcessoUnico.substring(7, 9));
 
             return numeroProcessoPreparado;
         }
