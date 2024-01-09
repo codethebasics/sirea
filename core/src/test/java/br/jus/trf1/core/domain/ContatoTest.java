@@ -5,7 +5,6 @@ import br.jus.trf1.core.enums.OrgaoEmissorEnum;
 import br.jus.trf1.core.enums.TipoDocumentoOficialEnum;
 import br.jus.trf1.core.enums.UnidadeFederativaEnum;
 import br.jus.trf1.core.exception.InvalidEmailException;
-import br.jus.trf1.core.exception.InvalidPasswordException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

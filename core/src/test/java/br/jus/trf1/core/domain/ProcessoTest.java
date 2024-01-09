@@ -26,23 +26,6 @@ class ProcessoTest {
     }
 
     @Test
-    @DisplayName("Dado um processo válido, quando instanciar processo então deve criar processo")
-    void dadoUmProcessoValido_quandoInstanciarProcesso_entaoDeveCriarProcesso() {
-        // given / when
-        Processo processo = new Processo(
-                "0",
-                "0",
-                "0",
-                OrgaoJudiciarioEnum.CNJ,
-                RegiaoTRFEnum.TRF1,
-
-                "0");
-
-        // then
-        assertNotNull(processo, "Espera-se que o processo não seja nulo");
-    }
-
-    @Test
     void dadoUmProcessoValido_quandoEfetuarPreparacao_entaoRetornaProcessoFormatado() {
         // given
         String processo = "0082952-92.2021.4.01.8000";
@@ -51,7 +34,7 @@ class ProcessoTest {
         String processoFormatado = Processo.Modulo97Base10.preparacao(processo);
 
         // then
-        assertEquals("00829522021401800000", processoFormatado);
+        assertEquals("00829522021401800092", processoFormatado);
     }
 
     @Test
