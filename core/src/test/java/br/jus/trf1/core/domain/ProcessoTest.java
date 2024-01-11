@@ -1,8 +1,8 @@
 package br.jus.trf1.core.domain;
 
 import br.jus.trf1.core.enums.OrgaoJudiciarioEnum;
-import br.jus.trf1.core.enums.RegiaoTRFEnum;
-import org.junit.jupiter.api.DisplayName;
+import br.jus.trf1.core.enums.OrigensTRF1;
+import br.jus.trf1.core.enums.TribunalEnum;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigInteger;
@@ -22,12 +22,12 @@ class ProcessoTest {
 
         // given
         Processo processo = new Processo(
-                "0033603",
-                "86",
-                "2022",
+                "0002984",
+                "22",
+                "2015",
                 OrgaoJudiciarioEnum.JF,
-                RegiaoTRFEnum.TRF1,
-                "8000");
+                TribunalEnum.TRF1,
+                OrigensTRF1.SUBSECAO_JUDICIARIA_DE_SINOP);
 
         // when
         boolean isProcessoValid = processo.isNumeroProcessoValid();
@@ -80,12 +80,12 @@ class ProcessoTest {
         // given / when / then
         assertThrows(RuntimeException.class, () -> {
             new Processo(
-                    "0025621",
-                    "84",
-                    "2022",
+                    "0002984",
+                    "22",
+                    "2016",
                     OrgaoJudiciarioEnum.JF,
-                    RegiaoTRFEnum.TRF1,
-                    "8000");
+                    TribunalEnum.TRF1,
+                    OrigensTRF1.SUBSECAO_JUDICIARIA_DE_SINOP);
         }, "Espera-se que uma excetion seja lançada");
     }
 
@@ -94,18 +94,18 @@ class ProcessoTest {
 
         // given
         Processo processo = new Processo(
-                "0033603",
-                "86",
-                "2022",
+                "0002984",
+                "22",
+                "2015",
                 OrgaoJudiciarioEnum.JF,
-                RegiaoTRFEnum.TRF1,
-                "8000");
+                TribunalEnum.TRF1,
+                OrigensTRF1.SUBSECAO_JUDICIARIA_DE_SINOP);
 
         // when
         String numeroProcessoFormatado = processo.getNumeroProcessoFormatado();
 
         // then
-        assertEquals("0033603-86.2022.4.01.8000", numeroProcessoFormatado, "Espera-se que o número do processo esteja formatado");
+        assertEquals("0002984-22.2015.4.01.3603", numeroProcessoFormatado, "Espera-se que o número do processo esteja formatado");
     }
 
     @Test
@@ -113,18 +113,18 @@ class ProcessoTest {
 
         // given
         Processo processo = new Processo(
-                "0033603",
-                "86",
-                "2022",
+                "0002984",
+                "22",
+                "2015",
                 OrgaoJudiciarioEnum.JF,
-                RegiaoTRFEnum.TRF1,
-                "8000");
+                TribunalEnum.TRF1,
+                OrigensTRF1.SUBSECAO_JUDICIARIA_DE_SINOP);
 
         // when
         String numeroProcessoFormatado = processo.getNumeroProcessoSemZerosAEsquerda();
 
         // then
-        assertEquals("336038620224018000", numeroProcessoFormatado, "Espera-se que o número do processo esteja formatado");
+        assertEquals("29842220154013603", numeroProcessoFormatado, "Espera-se que o número do processo esteja formatado");
     }
 
     @Test
@@ -132,17 +132,41 @@ class ProcessoTest {
 
         // given
         Processo processo = new Processo(
-                "0033603",
-                "86",
-                "2022",
+                "0002984",
+                "22",
+                "2015",
                 OrgaoJudiciarioEnum.JF,
-                RegiaoTRFEnum.TRF1,
-                "8000");
+                TribunalEnum.TRF1,
+                OrigensTRF1.SUBSECAO_JUDICIARIA_DE_SINOP);
 
         // when
         String numeroProcessoFormatado = processo.getNumeroProcessoFormatadoSemZerosAEsquerda();
 
         // then
-        assertEquals("33603-86.2022.4.01.8000", numeroProcessoFormatado, "Espera-se que o número do processo esteja formatado");
+        assertEquals("2984-22.2015.4.01.3603", numeroProcessoFormatado, "Espera-se que o número do processo esteja formatado");
+    }
+
+    @Test
+    void dadoUmProcesso_quandoFormatarNumeroProcesso_entaoDeveRetornarProcessoFormatado() {
+        // given
+        String processo = "00000000000000000000";
+
+        // when
+        String processoFormatado = Processo.formatarNumeroProcesso(processo);
+
+        // then
+        assertEquals("0000000-00.0000.0.00.0000", processoFormatado);
+    }
+
+    @Test
+    void dadoUmNumeroDeProcessoValido_quandoInstanciarProcessoPeloNumero_entaoDeveCriarProcesso() {
+        // given
+        String numeroProcesso = "0002984-22.2015.4.01.3603";
+
+        // when
+        Processo processo = new Processo(numeroProcesso);
+
+        // then
+        assertNotNull(processo, "Espera-se que o processo seja criado");
     }
 }

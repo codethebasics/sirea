@@ -1,9 +1,12 @@
 package br.jus.trf1.core.domain;
 
 import br.jus.trf1.core.enums.OrgaoJudiciarioEnum;
-import br.jus.trf1.core.enums.RegiaoTRFEnum;
+import br.jus.trf1.core.enums.OrigensTRF1;
+import br.jus.trf1.core.enums.TribunalEnum;
 
 import java.math.BigInteger;
+import java.util.Arrays;
+import java.util.Objects;
 
 /**
  * <b>Representa um processo</b>
@@ -33,8 +36,8 @@ public class Processo {
     private String digitoVerificador;
     private String anoDeAjuizamento;
     private OrgaoJudiciarioEnum orgaoDoPoderJudiciario;
-    private RegiaoTRFEnum regiao;
-    private String origemNoPrimeiroGrau;
+    private TribunalEnum tribunal;
+    private OrigensTRF1 origem;
     private String numeroProcesso;
 
     /**
@@ -45,22 +48,33 @@ public class Processo {
      * @param digitoVerificador DD
      * @param anoDeAjuizamento AAAA
      * @param orgaoDoPoderJudiciario J
-     * @param regiao TR
-     * @param origemNoPrimeiroGrau OOOO
+     * @param tribunal TR
+     * @param origem OOOO
      */
     public Processo(
             String numeroSequencial,
             String digitoVerificador,
             String anoDeAjuizamento,
             OrgaoJudiciarioEnum orgaoDoPoderJudiciario,
-            RegiaoTRFEnum regiao,
-            String origemNoPrimeiroGrau) {
+            TribunalEnum tribunal,
+            OrigensTRF1 origem) {
         this.setNumeroSequencial(numeroSequencial);
         this.setDigitoVerificador(digitoVerificador);
         this.setAnoDeAjuizamento(anoDeAjuizamento);
         this.setOrgaoDoPoderJudiciario(orgaoDoPoderJudiciario);
-        this.setRegiao(regiao);
-        this.setOrigemNoPrimeiroGrau(origemNoPrimeiroGrau);
+        this.setTribunal(tribunal);
+        this.setOrigem(origem);
+        this.setNumeroProcesso();
+    }
+
+    public Processo(String numeroProcesso) {
+        String numeroProcessoPreparado = Modulo97Base10.removerFormatacao(numeroProcesso);
+        this.setNumeroSequencial(numeroProcessoPreparado.substring(0, 7));
+        this.setDigitoVerificador(numeroProcessoPreparado.substring(7, 9));
+        this.setAnoDeAjuizamento(numeroProcessoPreparado.substring(9, 13));
+        this.setOrgaoDoPoderJudiciario(numeroProcessoPreparado.substring(13, 14));
+        this.setTribunal(numeroProcessoPreparado.substring(14, 16));
+        this.setOrigem(numeroProcessoPreparado.substring(16));
         this.setNumeroProcesso();
     }
 
@@ -134,8 +148,23 @@ public class Processo {
         this.orgaoDoPoderJudiciario = orgaoDoPoderJudiciario;
     }
 
-    public RegiaoTRFEnum getRegiao() {
-        return regiao;
+    private void setOrgaoDoPoderJudiciario(String codigo) {
+        switch (codigo) {
+            case "1": setOrgaoDoPoderJudiciario(OrgaoJudiciarioEnum.STF); break;
+            case "2": setOrgaoDoPoderJudiciario(OrgaoJudiciarioEnum.CNJ); break;
+            case "3": setOrgaoDoPoderJudiciario(OrgaoJudiciarioEnum.STJ); break;
+            case "4": setOrgaoDoPoderJudiciario(OrgaoJudiciarioEnum.JF); break;
+            case "5": setOrgaoDoPoderJudiciario(OrgaoJudiciarioEnum.JT); break;
+            case "6": setOrgaoDoPoderJudiciario(OrgaoJudiciarioEnum.JE); break;
+            case "7": setOrgaoDoPoderJudiciario(OrgaoJudiciarioEnum.JMU); break;
+            case "8": setOrgaoDoPoderJudiciario(OrgaoJudiciarioEnum.DFT); break;
+            case "9": setOrgaoDoPoderJudiciario(OrgaoJudiciarioEnum.JM); break;
+            default: throw new RuntimeException("Órgão do poder judiciário inválido");
+        }
+    }
+
+    public TribunalEnum getTribunal() {
+        return tribunal;
     }
 
     /**
@@ -152,19 +181,40 @@ public class Processo {
      *      <li>VIII – nos processos da Justiça Militar Estadual, os Tribunais Militares dos Estados de Minas Gerais, Rio Grande do Sul e São Paulo devem ser identificados no campo (TR) pelos números 13, 21 e 26, respectivamente, cumprida a ordem alfabética de que tratam os incisos V e VII;</li>
      * </ul>
      *
-     * @param regiao TR
+     * @param tribunal TR
      */
-    private void setRegiao(RegiaoTRFEnum regiao) {
-
-        this.regiao = regiao;
+    private void setTribunal(TribunalEnum tribunal) {
+        this.tribunal = tribunal;
     }
 
-    public String getOrigemNoPrimeiroGrau() {
-        return origemNoPrimeiroGrau;
+    private void setTribunal(String codigo) {
+        switch (codigo) {
+            case "01": this.setTribunal(TribunalEnum.TRF1); break;
+            case "02": this.setTribunal(TribunalEnum.TRF2); break;
+            case "03": this.setTribunal(TribunalEnum.TRF3); break;
+            case "04": this.setTribunal(TribunalEnum.TRF4); break;
+            case "05": this.setTribunal(TribunalEnum.TRF5); break;
+            case "06": this.setTribunal(TribunalEnum.TRF6); break;
+            default: throw new RuntimeException("Tribunal inválido");
+        }
     }
 
-    private void setOrigemNoPrimeiroGrau(String origemNoPrimeiroGrau) {
-        this.origemNoPrimeiroGrau = origemNoPrimeiroGrau;
+    public OrigensTRF1 getOrigem() {
+        return origem;
+    }
+
+    public void setOrigem(OrigensTRF1 origem) {
+        this.origem = origem;
+    }
+
+    public void setOrigem(String origem) {
+        for (OrigensTRF1 o : OrigensTRF1.values()) {
+            if (o.getCodigo().equals(origem)) {
+                this.origem = o;
+            }
+        }
+        if (Objects.isNull(this.origem))
+            throw new RuntimeException("Origem desconhecida");
     }
 
     public String getNumeroProcesso() {
@@ -176,8 +226,14 @@ public class Processo {
                 this.digitoVerificador + "." +
                 this.anoDeAjuizamento + "." +
                 this.orgaoDoPoderJudiciario.getCodigo() + "." +
-                this.regiao.getCodigo() + "." +
-                this.origemNoPrimeiroGrau;
+                this.tribunal.getCodigo() + "." +
+                this.origem.getCodigo();
+    }
+
+    public static String formatarNumeroProcesso(String numeroProcesso) {
+        String regex = "(\\d{7})(\\d{2})(\\d{4})(\\d{1})(\\d{2})(\\d{4})";
+        String replacement = "$1-$2.$3.$4.$5.$6";
+        return numeroProcesso.replaceAll(regex, replacement);
     }
 
     public String getNumeroProcessoSemZerosAEsquerda() {
@@ -188,21 +244,24 @@ public class Processo {
         return this.getNumeroProcessoFormatado().replaceFirst("^0+", "");
     }
 
+    public String getNumeroProcessoSemFormatacao() {
+        return this.getNumeroProcesso().replaceAll("[^0-9]", "");
+    }
+
     public void setNumeroProcesso() {
         this.numeroProcesso = this.numeroSequencial +
                 this.digitoVerificador +
                 this.anoDeAjuizamento +
                 this.orgaoDoPoderJudiciario.getCodigo() +
-                this.regiao.getCodigo() +
-                this.origemNoPrimeiroGrau;
+                this.tribunal.getCodigo() +
+                this.origem.getCodigo();
 
         if (!isNumeroProcessoValid())
             throw new RuntimeException("Número de processo inválido");
     }
 
     public boolean isNumeroProcessoValid() {
-        String numeroProcessoPreparado = Modulo97Base10.preparacao(this.numeroProcesso);
-        return Modulo97Base10.calculo(numeroProcessoPreparado, this.digitoVerificador);
+        return Modulo97Base10.calculo(this.numeroProcesso);
     }
 
     /**
@@ -249,6 +308,18 @@ public class Processo {
 
             return result.equals(BigInteger.ONE) ;
         }
+
+        public static boolean calculo(String numeroProcesso) {
+            String numeroProcessoSemFormatacao = removerFormatacao(numeroProcesso);
+            String digitoVerificador = numeroProcessoSemFormatacao.substring(7, 9);
+            String numeroProcessoPreparado = preparacao(numeroProcessoSemFormatacao);
+            return calculo(numeroProcessoPreparado, digitoVerificador);
+        }
+
+        public static String removerFormatacao(String numeroProcesso) {
+            return numeroProcesso.replaceAll("[^0-9]", "");
+        }
+
 
         public static BigInteger calcularMod97(BigInteger numero) {
             return numero.mod(BigInteger.valueOf(97L));

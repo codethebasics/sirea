@@ -11,7 +11,7 @@ public enum OrgaoJudiciarioEnum {
     JT("JT", "Justiça do Trabalho", "5"),
     JE("JE", "Justiça Eleitoral", "6"),
     JMU("JMU", "Justiça Militar da União", "7"),
-    JDFT("JDFT", "Justiça dos Estados e do Distrito Federal e Territórios", "8"),
+    DFT("DFT", "Justiça dos Estados e do Distrito Federal e Territórios", "8"),
     JM("E", "Justiça Militar Estadual", "9");
 
     private String sigla;
