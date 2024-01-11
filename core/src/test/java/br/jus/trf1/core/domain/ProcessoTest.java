@@ -27,7 +27,7 @@ class ProcessoTest {
                 "2015",
                 OrgaoJudiciarioEnum.JF,
                 TribunalEnum.TRF1,
-                OrigensTRF1.SUBSECAO_JUDICIARIA_DE_SINOP);
+                "3603");
 
         // when
         boolean isProcessoValid = processo.isNumeroProcessoValid();

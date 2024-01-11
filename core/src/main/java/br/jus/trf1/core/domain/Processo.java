@@ -5,7 +5,6 @@ import br.jus.trf1.core.enums.OrigensTRF1;
 import br.jus.trf1.core.enums.TribunalEnum;
 
 import java.math.BigInteger;
-import java.util.Arrays;
 import java.util.Objects;
 
 /**
@@ -58,6 +57,22 @@ public class Processo {
             OrgaoJudiciarioEnum orgaoDoPoderJudiciario,
             TribunalEnum tribunal,
             OrigensTRF1 origem) {
+        this.setNumeroSequencial(numeroSequencial);
+        this.setDigitoVerificador(digitoVerificador);
+        this.setAnoDeAjuizamento(anoDeAjuizamento);
+        this.setOrgaoDoPoderJudiciario(orgaoDoPoderJudiciario);
+        this.setTribunal(tribunal);
+        this.setOrigem(origem);
+        this.setNumeroProcesso();
+    }
+
+    public Processo(
+            String numeroSequencial,
+            String digitoVerificador,
+            String anoDeAjuizamento,
+            OrgaoJudiciarioEnum orgaoDoPoderJudiciario,
+            TribunalEnum tribunal,
+            String origem) {
         this.setNumeroSequencial(numeroSequencial);
         this.setDigitoVerificador(digitoVerificador);
         this.setAnoDeAjuizamento(anoDeAjuizamento);
