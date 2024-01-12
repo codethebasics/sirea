@@ -1,7 +1,7 @@
 package br.jus.trf1.core.domain;
 
 import br.jus.trf1.core.enums.OrgaoJudiciarioEnum;
-import br.jus.trf1.core.enums.OrigensTRF1;
+import br.jus.trf1.core.enums.OrigensTRF1Enum;
 import br.jus.trf1.core.enums.TribunalEnum;
 import org.junit.jupiter.api.Test;
 
@@ -85,7 +85,7 @@ class ProcessoTest {
                     "2016",
                     OrgaoJudiciarioEnum.JF,
                     TribunalEnum.TRF1,
-                    OrigensTRF1.SUBSECAO_JUDICIARIA_DE_SINOP);
+                    OrigensTRF1Enum.SUBSECAO_JUDICIARIA_DE_SINOP);
         }, "Espera-se que uma excetion seja lançada");
     }
 
@@ -99,7 +99,7 @@ class ProcessoTest {
                 "2015",
                 OrgaoJudiciarioEnum.JF,
                 TribunalEnum.TRF1,
-                OrigensTRF1.SUBSECAO_JUDICIARIA_DE_SINOP);
+                OrigensTRF1Enum.SUBSECAO_JUDICIARIA_DE_SINOP);
 
         // when
         String numeroProcessoFormatado = processo.getNumeroProcessoFormatado();
@@ -118,7 +118,7 @@ class ProcessoTest {
                 "2015",
                 OrgaoJudiciarioEnum.JF,
                 TribunalEnum.TRF1,
-                OrigensTRF1.SUBSECAO_JUDICIARIA_DE_SINOP);
+                OrigensTRF1Enum.SUBSECAO_JUDICIARIA_DE_SINOP);
 
         // when
         String numeroProcessoFormatado = processo.getNumeroProcessoSemZerosAEsquerda();
@@ -137,7 +137,7 @@ class ProcessoTest {
                 "2015",
                 OrgaoJudiciarioEnum.JF,
                 TribunalEnum.TRF1,
-                OrigensTRF1.SUBSECAO_JUDICIARIA_DE_SINOP);
+                OrigensTRF1Enum.SUBSECAO_JUDICIARIA_DE_SINOP);
 
         // when
         String numeroProcessoFormatado = processo.getNumeroProcessoFormatadoSemZerosAEsquerda();

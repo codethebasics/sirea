@@ -1,11 +1,16 @@
 package br.jus.trf1.core.domain;
 
 import br.jus.trf1.core.enums.OrgaoJudiciarioEnum;
-import br.jus.trf1.core.enums.OrigensTRF1;
+import br.jus.trf1.core.enums.OrigensTRF1Enum;
 import br.jus.trf1.core.enums.TribunalEnum;
+import br.jus.trf1.core.exception.processo.AnoInvalidoException;
+import br.jus.trf1.core.exception.processo.NumeroProcessoInvalidoException;
+import br.jus.trf1.core.exception.processo.OrigemDesconhecidaException;
 
 import java.math.BigInteger;
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * <b>Representa um processo</b>
@@ -36,7 +41,7 @@ public class Processo {
     private String anoDeAjuizamento;
     private OrgaoJudiciarioEnum orgaoDoPoderJudiciario;
     private TribunalEnum tribunal;
-    private OrigensTRF1 origem;
+    private OrigensTRF1Enum origem;
     private String numeroProcesso;
 
     /**
@@ -56,7 +61,7 @@ public class Processo {
             String anoDeAjuizamento,
             OrgaoJudiciarioEnum orgaoDoPoderJudiciario,
             TribunalEnum tribunal,
-            OrigensTRF1 origem) {
+            OrigensTRF1Enum origem) {
         this.setNumeroSequencial(numeroSequencial);
         this.setDigitoVerificador(digitoVerificador);
         this.setAnoDeAjuizamento(anoDeAjuizamento);
@@ -84,13 +89,22 @@ public class Processo {
 
     public Processo(String numeroProcesso) {
         String numeroProcessoPreparado = Modulo97Base10.removerFormatacao(numeroProcesso);
-        this.setNumeroSequencial(numeroProcessoPreparado.substring(0, 7));
-        this.setDigitoVerificador(numeroProcessoPreparado.substring(7, 9));
-        this.setAnoDeAjuizamento(numeroProcessoPreparado.substring(9, 13));
-        this.setOrgaoDoPoderJudiciario(numeroProcessoPreparado.substring(13, 14));
-        this.setTribunal(numeroProcessoPreparado.substring(14, 16));
-        this.setOrigem(numeroProcessoPreparado.substring(16));
+        numeroProcessoPreparado = formatarNumeroProcesso(numeroProcessoPreparado);
+        String regex = "(\\d{7})-(\\d{2})\\.(\\d{4})\\.(\\d)\\.(\\d{2})\\.(\\d{4})";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(numeroProcessoPreparado);
+
+        if (!matcher.find())
+            throw new NumeroProcessoInvalidoException("Formato inválido. Segui formatação de processo único: 0000000-00.0000.0.0.0000");
+
+        this.setNumeroSequencial(matcher.group(1));
+        this.setDigitoVerificador(matcher.group(2));
+        this.setAnoDeAjuizamento(matcher.group(3));
+        this.setOrgaoDoPoderJudiciario(matcher.group(4));
+        this.setTribunal(matcher.group(5));
+        this.setOrigem(matcher.group(6));
         this.setNumeroProcesso();
+
     }
 
     public String getNumeroSequencial() {
@@ -134,7 +148,9 @@ public class Processo {
      *
      * @param anoDeAjuizamento AAAA
      */
-    private void setAnoDeAjuizamento(String anoDeAjuizamento) {
+    public void setAnoDeAjuizamento(String anoDeAjuizamento) {
+        if (anoDeAjuizamento.length() != 4)
+            throw new AnoInvalidoException();
         this.anoDeAjuizamento = anoDeAjuizamento;
     }
 
@@ -214,22 +230,22 @@ public class Processo {
         }
     }
 
-    public OrigensTRF1 getOrigem() {
+    public OrigensTRF1Enum getOrigem() {
         return origem;
     }
 
-    public void setOrigem(OrigensTRF1 origem) {
+    public void setOrigem(OrigensTRF1Enum origem) {
         this.origem = origem;
     }
 
     public void setOrigem(String origem) {
-        for (OrigensTRF1 o : OrigensTRF1.values()) {
+        for (OrigensTRF1Enum o : OrigensTRF1Enum.values()) {
             if (o.getCodigo().equals(origem)) {
                 this.origem = o;
             }
         }
         if (Objects.isNull(this.origem))
-            throw new RuntimeException("Origem desconhecida");
+            throw new OrigemDesconhecidaException();
     }
 
     public String getNumeroProcesso() {
@@ -272,7 +288,7 @@ public class Processo {
                 this.origem.getCodigo();
 
         if (!isNumeroProcessoValid())
-            throw new RuntimeException("Número de processo inválido");
+            throw new NumeroProcessoInvalidoException();
     }
 
     public boolean isNumeroProcessoValid() {

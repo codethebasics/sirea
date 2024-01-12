@@ -1,6 +1,6 @@
 package br.jus.trf1.core.enums;
 
-public enum OrigensTRF1 {
+public enum OrigensTRF1Enum {
     SUBSECAO_JUDICIARIA_DE_ANAPOLIS("SUBSEÇÃO JUDICIÁRIA DE ANÁPOLIS", "ANS", UnidadeFederativaEnum.GO, "3502"),
     SUBSECAO_JUDICIARIA_DE_RIO_VERDE("SUBSEÇÃO JUDICIÁRIA DE RIO VERDE", "RVD", UnidadeFederativaEnum.GO, "3503"),
     SUBSECAO_JUDICIARIA_DE_APARECIDA_DE_GOIANIA("SUBSEÇÃO JUDICIÁRIA DE APARECIDA DE GOIÂNIA", "ACG", UnidadeFederativaEnum.GO, "3504"),
@@ -104,7 +104,7 @@ public enum OrigensTRF1 {
     private final UnidadeFederativaEnum unidadeFederativa;
     private final String codigo;
 
-    OrigensTRF1(String nome, String sigla, UnidadeFederativaEnum unidadeFederativa, String codigo) {
+    OrigensTRF1Enum(String nome, String sigla, UnidadeFederativaEnum unidadeFederativa, String codigo) {
         this.nome = nome;
         this.sigla = sigla;
         this.unidadeFederativa = unidadeFederativa;
