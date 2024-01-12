@@ -4,7 +4,6 @@ import br.jus.trf1.core.domain.Pessoa;
 import br.jus.trf1.usecase.pessoa.exceptions.CriarPessoaException;
 
 /**
- *
  * Caso de uso Criar Pessoa
  *
  * @author bruno.carneiro (tr301605)
