@@ -35,7 +35,7 @@ public class Pessoa {
             Endereco endereco) {
 
         this.nome = nome;
-        this.dataNascimento = dataNascimento;
+        this.setDataNascimento(dataNascimento);
         this.naturalidade = naturalidade;
         this.nacionalidade = nacionalidade;
         this.documentosOficiais = documentosOficiais;
@@ -71,6 +71,8 @@ public class Pessoa {
     }
 
     public void setDataNascimento(LocalDate dataNascimento) {
+        if (dataNascimento.isAfter(LocalDate.now()))
+            throw new RuntimeException("Data de nascimento inválida");
         this.dataNascimento = dataNascimento;
     }
 

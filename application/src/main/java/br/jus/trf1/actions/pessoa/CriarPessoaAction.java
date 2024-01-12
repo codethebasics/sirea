@@ -1,4 +1,4 @@
-package br.jus.trf1.command.pessoa;
+package br.jus.trf1.actions.pessoa;
 
 import br.jus.trf1.core.domain.Pessoa;
 import br.jus.trf1.gateway.pessoa.CriarPessoaGateway;
@@ -9,11 +9,11 @@ import br.jus.trf1.usecase.pessoa.CriarPessoaUC;
  *
  * @author bruno.carneiro (tr301605)
  */
-public class CriarPessoaCommand implements CriarPessoaUC {
+public class CriarPessoaAction implements CriarPessoaUC {
 
     private final CriarPessoaGateway criarPessoaGateway;
 
-    public CriarPessoaCommand(CriarPessoaGateway criarPessoaGateway) {
+    public CriarPessoaAction(CriarPessoaGateway criarPessoaGateway) {
         this.criarPessoaGateway = criarPessoaGateway;
     }
 

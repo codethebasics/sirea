@@ -14,18 +14,10 @@ import java.util.List;
 public interface BuscarPessoaUC {
 
     /**
-     * <b>Fluxo principal</b>
      * <ul>
      *      <li>Dado o ID de uma pessoa válida</li>
      *      <li>Quando solicitar a busca</li>
      *      <li>Então retorna pessoa pesquisada</li>
-     * </ul>
-     * <br>
-     * <b>Fluxo de exeção</b>
-     * <ul>
-     *      <li>Dado o ID de uma pessoa não existente</li>
-     *      <li>Quando solicitar a busca</li>
-     *      <li>Então lança PessoaNaoEncontradaException</li>
      * </ul>
      *
      * @param id id da pessoa a ser pesquisada
@@ -34,18 +26,10 @@ public interface BuscarPessoaUC {
     Pessoa peloId(Long id) throws PessoaNaoEncontradaException;
 
     /**
-     * <b>Fluxo principal</b>
      * <ul>
      *      <li>Dado o nome de uma pessoa válida</li>
      *      <li>Quando solicitar a busca</li>
      *      <li>Então retorna pessoa pesquisada</li>
-     * </ul>
-     * <br>
-     * <b>Fluxo de exeção</b>
-     * <ul>
-     *      <li>Dado o nome de uma pessoa não existente</li>
-     *      <li>Quando solicitar a busca</li>
-     *      <li>Então lança PessoaNaoEncontradaException</li>
      * </ul>
      *
      * @param nome nome da pessoa a ser pesquisada
@@ -54,18 +38,10 @@ public interface BuscarPessoaUC {
     List<Pessoa> peloNome(String nome) throws PessoaNaoEncontradaException;
 
     /**
-     * <b>Fluxo principal</b>
      * <ul>
      *      <li>Dado o email de uma pessoa válida</li>
      *      <li>Quando solicitar a busca</li>
      *      <li>Então retorna pessoa pesquisada</li>
-     * </ul>
-     * <br>
-     * <b>Fluxo de exeção</b>
-     * <ul>
-     *      <li>Dado o email de uma pessoa não existente</li>
-     *      <li>Quando solicitar a busca</li>
-     *      <li>Então lança PessoaNaoEncontradaException</li>
      * </ul>
      *
      * @param email id da pessoa a ser pesquisada

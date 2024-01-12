@@ -1,4 +1,4 @@
-package br.jus.trf1.command.usuario;
+package br.jus.trf1.actions.usuario;
 
 import br.jus.trf1.core.domain.Usuario;
 import br.jus.trf1.usecase.usuario.BuscarUsuarioUC;
