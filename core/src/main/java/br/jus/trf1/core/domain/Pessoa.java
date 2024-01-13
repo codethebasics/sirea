@@ -1,7 +1,10 @@
 package br.jus.trf1.core.domain;
 
+import br.jus.trf1.core.enums.GeneroEnum;
+import br.jus.trf1.core.enums.OcupacaoProfissionalEnum;
+import br.jus.trf1.core.enums.UnidadeFederativaEnum;
+
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -17,38 +20,61 @@ public class Pessoa {
     private String nomeSocial;
     private LocalDate dataNascimento;
     private LocalDate dataFalecimento;
-    private String naturalidade;
+    private GeneroEnum genero;
+    private OcupacaoProfissionalEnum ocupacaoProfissional;
+    private UnidadeFederativaEnum naturalidade;
     private String nacionalidade;
-    private LocalDateTime criacao;
-    private LocalDateTime modificacao;
     private Set<DocumentoOficial> documentosOficiais;
     private Contato contato;
     private Endereco endereco;
 
-    public Pessoa(
+    public Pessoa() {
+        this.setDocumentosOficiais(new HashSet<>());
+    }
+
+    private Pessoa(
             String nome,
+            String nomeSocial,
             LocalDate dataNascimento,
-            String naturalidade,
+            LocalDate dataFalecimento,
+            GeneroEnum genero,
+            OcupacaoProfissionalEnum ocupacaoProfissional,
+            UnidadeFederativaEnum naturalidade,
             String nacionalidade,
             Set<DocumentoOficial> documentosOficiais,
             Contato contato,
             Endereco endereco) {
-
-        this.nome = nome;
+        this.setNome(nome);
+        this.setNomeSocial(nomeSocial);
         this.setDataNascimento(dataNascimento);
-        this.naturalidade = naturalidade;
-        this.nacionalidade = nacionalidade;
-        this.documentosOficiais = documentosOficiais;
-        this.contato = contato;
-        this.endereco = endereco;
-        this.criacao = LocalDateTime.now();
-        this.contato = contato;
-        this.endereco = endereco;
-        this.documentosOficiais = !Objects.isNull(documentosOficiais)
-                ? documentosOficiais
-                : new HashSet<>();
+        this.setDataFalecimento(dataFalecimento);
+        this.setGenero(genero);
+        this.setOcupacaoProfissional(ocupacaoProfissional);
+        this.setNaturalidade(naturalidade);
+        this.setNacionalidade(nacionalidade);
+        this.setDocumentosOficiais(documentosOficiais);
+        this.setContato(contato);
+        this.setEndereco(endereco);
     }
 
+    void adicionarDocumentoOficial(DocumentoOficial documentoOficial) {
+
+        if (Objects.isNull(documentoOficial))
+            throw new RuntimeException("O documento deve ser informado");
+
+        this.documentosOficiais.add(documentoOficial);
+    }
+
+    void removerDocumentoOficial(DocumentoOficial documentoOficial) {
+
+        if (Objects.isNull(documentoOficial))
+            throw new RuntimeException("O documento deve ser informado");
+
+        this.setDocumentosOficiais(
+                this.documentosOficiais.stream()
+                        .filter(d -> !d.equals(documentoOficial))
+                        .collect(Collectors.toSet()));
+    }
 
     public String getNome() {
         return nome;
@@ -71,8 +97,6 @@ public class Pessoa {
     }
 
     public void setDataNascimento(LocalDate dataNascimento) {
-        if (dataNascimento.isAfter(LocalDate.now()))
-            throw new RuntimeException("Data de nascimento inválida");
         this.dataNascimento = dataNascimento;
     }
 
@@ -84,11 +108,27 @@ public class Pessoa {
         this.dataFalecimento = dataFalecimento;
     }
 
-    public String getNaturalidade() {
+    public GeneroEnum getGenero() {
+        return genero;
+    }
+
+    public void setGenero(GeneroEnum genero) {
+        this.genero = genero;
+    }
+
+    public OcupacaoProfissionalEnum getOcupacaoProfissional() {
+        return ocupacaoProfissional;
+    }
+
+    public void setOcupacaoProfissional(OcupacaoProfissionalEnum ocupacaoProfissional) {
+        this.ocupacaoProfissional = ocupacaoProfissional;
+    }
+
+    public UnidadeFederativaEnum getNaturalidade() {
         return naturalidade;
     }
 
-    public void setNaturalidade(String naturalidade) {
+    public void setNaturalidade(UnidadeFederativaEnum naturalidade) {
         this.naturalidade = naturalidade;
     }
 
@@ -100,28 +140,15 @@ public class Pessoa {
         this.nacionalidade = nacionalidade;
     }
 
-    public LocalDateTime getCriacao() {
-        return criacao;
-    }
-
-    public void setCriacao(LocalDateTime criacao) {
-        this.criacao = criacao;
-    }
-
-    public LocalDateTime getModificacao() {
-        return modificacao;
-    }
-
-    public void setModificacao(LocalDateTime modificacao) {
-        this.modificacao = modificacao;
-    }
-
     public Set<DocumentoOficial> getDocumentosOficiais() {
         return documentosOficiais;
     }
 
-    private void setDocumentosOficiais(Set<DocumentoOficial> documentosOficiais) {
-        this.documentosOficiais = documentosOficiais;
+    public void setDocumentosOficiais(Set<DocumentoOficial> documentosOficiais) {
+        this.documentosOficiais =
+                (Objects.isNull(documentosOficiais))
+                        ? new HashSet<>()
+                        :documentosOficiais;
     }
 
     public Contato getContato() {
@@ -140,46 +167,87 @@ public class Pessoa {
         this.endereco = endereco;
     }
 
-    public void adicionarDocumentoOficial(DocumentoOficial documentoOficial) {
-        if (Objects.isNull(documentoOficial)) {
-            throw new RuntimeException("O documento não pode ser nulo");
+    public static class Builder {
+        private String nome;
+        private String nomeSocial;
+        private LocalDate dataNascimento;
+        private LocalDate dataFalecimento;
+        private GeneroEnum genero;
+        private OcupacaoProfissionalEnum ocupacaoProfissional;
+        private UnidadeFederativaEnum naturalidade;
+        private String nacionalidade;
+        private Set<DocumentoOficial> documentosOficiais;
+        private Contato contato;
+        private Endereco endereco;
+
+        public Builder nome(String nome) {
+            this.nome = nome;
+            return this;
         }
-        this.documentosOficiais.add(documentoOficial);
-    }
 
-    public void removerDocumentoOficial(DocumentoOficial documentoOficial) {
-        this.setDocumentosOficiais(this.documentosOficiais.stream()
-                .filter(d -> !Objects.equals(d, documentoOficial))
-                .collect(Collectors.toSet()));
-    }
+        public Builder nomeSocial(String nomeSocial) {
+            this.nomeSocial = nomeSocial;
+            return this;
+        }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Pessoa pessoa = (Pessoa) o;
-        return Objects.equals(nome, pessoa.nome) && Objects.equals(dataNascimento, pessoa.dataNascimento) && Objects.equals(criacao, pessoa.criacao);
-    }
+        public Builder dataNascimento(LocalDate dataNascimento) {
+            this.dataNascimento = dataNascimento;
+            return this;
+        }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(nome, dataNascimento, criacao);
-    }
+        public Builder dataFalecimento(LocalDate dataFalecimento) {
+            this.dataFalecimento = dataFalecimento;
+            return this;
+        }
 
-    @Override
-    public String toString() {
-        return "Pessoa{" +
-                "nome='" + nome + '\'' +
-                ", nomeSocial='" + nomeSocial + '\'' +
-                ", dataNascimento=" + dataNascimento +
-                ", dataFalecimento=" + dataFalecimento +
-                ", naturalidade='" + naturalidade + '\'' +
-                ", nacionalidade='" + nacionalidade + '\'' +
-                ", criacao=" + criacao +
-                ", modificacao=" + modificacao +
-                ", documentosOficiais=" + documentosOficiais +
-                ", contato=" + contato +
-                ", endereco=" + endereco +
-                '}';
+        public Builder genero(GeneroEnum genero) {
+            this.genero = genero;
+            return this;
+        }
+
+        public Builder ocupacaoProfissional(OcupacaoProfissionalEnum ocupacaoProfissional) {
+            this.ocupacaoProfissional = ocupacaoProfissional;
+            return this;
+        }
+
+        public Builder naturalidade(UnidadeFederativaEnum naturalidade) {
+            this.naturalidade = naturalidade;
+            return this;
+        }
+
+        public Builder nacionalidade(String nacionalidade) {
+            this.nacionalidade = nacionalidade;
+            return this;
+        }
+
+        public Builder documentosOficiais(Set<DocumentoOficial> documentosOficiais) {
+            this.documentosOficiais = documentosOficiais;
+            return this;
+        }
+
+        public Builder contato(Contato contato) {
+            this.contato = contato;
+            return this;
+        }
+
+        public Builder endereco(Endereco endereco) {
+            this.endereco = endereco;
+            return this;
+        }
+
+        public Pessoa build() {
+            return new Pessoa(
+                    nome,
+                    nomeSocial,
+                    dataNascimento,
+                    dataFalecimento,
+                    genero,
+                    ocupacaoProfissional,
+                    naturalidade,
+                    nacionalidade,
+                    documentosOficiais,
+                    contato,
+                    endereco);
+        }
     }
 }

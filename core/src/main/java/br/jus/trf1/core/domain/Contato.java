@@ -99,4 +99,35 @@ public class Contato {
                 ", email='" + email + '\'' +
                 '}';
     }
+
+    public static class Builder {
+        private DDDEnum ddd;
+        private String fixo;
+        private String movel;
+        private String email;
+
+        public Builder ddd(DDDEnum ddd) {
+            this.ddd = ddd;
+            return this;
+        }
+
+        public Builder fixo(String fixo) {
+            this.fixo = fixo;
+            return this;
+        }
+
+        public Builder movel(String movel) {
+            this.movel = movel;
+            return this;
+        }
+
+        public Builder email(String email) {
+            this.email = email;
+            return this;
+        }
+
+        public Contato build() {
+            return new Contato(this.ddd, this.fixo, this.movel, this.email);
+        }
+    }
 }

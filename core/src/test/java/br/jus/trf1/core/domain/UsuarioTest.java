@@ -17,16 +17,7 @@ class UsuarioTest {
     @Test
     void alterarSenha() {
         // given
-        Usuario usuario = new Usuario(
-                "Bruno Carneiro",
-                LocalDate.of(1987, 6, 29),
-                "Brasília",
-                "Brasil",
-                new HashSet<>(),
-                null,
-                null,
-                "bruno.carneiro",
-                "Abcd1234#!@");
+        Usuario usuario = new Usuario("bruno.carneiro", "Abcd1234#!@");
 
         String senhaAntiga = "Abcd1234#!@";
         String senhaNova = "Abcd1234#!@&";
@@ -42,17 +33,7 @@ class UsuarioTest {
     @DisplayName("Dado um usuário e uma permissão, quando adicionar permissão ao usuário então espera que a permissão seja adicionada")
     public void deveAdicionarPermissao() {
         // given
-        Usuario usuario = new Usuario(
-                "Bruno Ferreira",
-                LocalDate.of(1987, 6, 29),
-                "Brasileiro",
-                "Brasília",
-
-                null,
-                null,
-                null,
-                "bruno.carneiro",
-                "Abcd123!@#");
+        Usuario usuario = new Usuario("bruno.carneiro", "Abcd123!@#");
 
         Permissao cadext = new Permissao(PermissaoEnum.CADEXT);
         Permissao adm = new Permissao(PermissaoEnum.ADMTRF1);
@@ -72,17 +53,7 @@ class UsuarioTest {
     @DisplayName("Dado um usuário e uma permissão, quando remover permissão do usuário então espera que a permissão seja removida")
     public void deveRemoverPermissao() {
         // given
-        Usuario usuario = new Usuario(
-                "Bruno Ferreira",
-                LocalDate.of(1987, 6, 29),
-                "Brasileiro",
-                "Brasília",
-
-                null,
-                null,
-                null,
-                "bruno.carneiro",
-                "Abcd123!@#");
+        Usuario usuario = new Usuario("bruno.carneiro", "Abcd123!@#");
 
         Permissao cadext = new Permissao(PermissaoEnum.CADEXT);
         Permissao adm = new Permissao(PermissaoEnum.ADMTRF1);
@@ -99,6 +70,17 @@ class UsuarioTest {
             usuario.removerPermissao(adm);
 
             assertTrue(usuario.getPermissoes().isEmpty(), "Espera-se que a lista esteja vazia");
+        });
+    }
+
+    @Test
+    void deveCriarUsuarioComPermissaoPadrao() {
+        // given
+        Usuario usuario = new Usuario("bruno.carneiro", "Abcd123!@#", true);
+
+        // when / then
+        assertAll("Verificando permissões adicionadas", () -> {
+            assertTrue(usuario.getPermissoes().stream().anyMatch(p -> p.getPermissao().equals(PermissaoEnum.CADEXT)));
         });
     }
 }

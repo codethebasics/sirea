@@ -70,14 +70,14 @@ class ContatoTest {
         Set<DocumentoOficial> documentos = new HashSet<>();
         documentos.add(documentoOficial);
 
-        Pessoa pessoa = new Pessoa(
-                "Bruno Carneiro",
-                LocalDate.of(1987, 6, 29),
-                "Brasília",
-                "Brasil",
-                documentos,
-                contato,
-                endereco);
+        Pessoa pessoa = new Pessoa();
+        pessoa.setNome("Bruno Caneiro");
+        pessoa.setDataNascimento(LocalDate.of(1987, 6, 29));
+        pessoa.setNaturalidade(UnidadeFederativaEnum.DF);
+        pessoa.setNacionalidade("Brasil");
+        pessoa.setDocumentosOficiais(documentos);
+        pessoa.setContato(contato);
+        pessoa.setEndereco(endereco);
 
         System.out.println(pessoa);
     }

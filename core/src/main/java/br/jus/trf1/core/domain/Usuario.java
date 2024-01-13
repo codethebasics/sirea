@@ -3,8 +3,6 @@ package br.jus.trf1.core.domain;
 import br.jus.trf1.core.enums.PermissaoEnum;
 import br.jus.trf1.core.exception.InvalidPasswordException;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -17,61 +15,31 @@ import java.util.regex.Pattern;
  * @author bruno.carneiro (tr301605)
  */
 public class Usuario extends Pessoa {
-    private final String usuario;
+    private String usuario;
     private String senha;
     private Boolean ativo;
     private Set<Permissao> permissoes;
 
-    public Usuario(String nome,
-                   LocalDate dataNascimento,
-                   String naturalidade,
-                   String nacionalidade,
-                   Set<DocumentoOficial> documentosOficiais,
-                   Contato contato,
-                   Endereco endereco,
-                   String usuario,
-                   String senha) {
-        super(
-                nome,
-                dataNascimento,
-                naturalidade,
-                nacionalidade,
-                documentosOficiais,
-                contato,
-                endereco);
-        this.usuario = usuario;
+    public Usuario(String usuario, String senha) {
+        this.setUsuario(usuario);
         this.setSenha(senha);
-        this.ativo = false;
-        this.permissoes = new HashSet<>();
-        this.permissoes.add(new Permissao(PermissaoEnum.CADEXT));
+        this.setAtivo(false);
+        this.adicionarPermissao(new Permissao(PermissaoEnum.CADEXT));
     }
 
-    public Usuario(
-            String nome,
-            LocalDate dataNascimento,
-            String naturalidade,
-            String nacionalidade,
-            Set<DocumentoOficial> documentosOficiais,
-            Contato contato,
-            Endereco endereco,
-            String usuario,
-            String senha,
-            Boolean ativo,
-            Set<Permissao> permissoes) {
-        super(
-                nome,
-                dataNascimento,
-                naturalidade,
-                nacionalidade,
-                documentosOficiais,
-                contato,
-                endereco);
-        this.usuario = usuario;
-        this.senha = senha;
-        this.ativo = ativo;
-        this.permissoes = Objects.nonNull(permissoes)
-            ? permissoes
-            : new HashSet<>();
+    public Usuario(String usuario, String senha, Boolean ativo) {
+        this.setUsuario(usuario);
+        this.setSenha(senha);
+        this.setAtivo(ativo);
+        this.adicionarPermissao(new Permissao(PermissaoEnum.CADEXT));
+    }
+
+    public Usuario(String usuario, String senha, Boolean ativo, Set<Permissao> permissoes) {
+        this.permissoes = permissoes;
+        this.setUsuario(usuario);
+        this.setSenha(senha);
+        this.setAtivo(ativo);
+        this.setPermissoes(permissoes);
     }
 
     public void alterarSenha(String senhaAntiga, String senhaNova) {
@@ -79,7 +47,6 @@ public class Usuario extends Pessoa {
             throw new RuntimeException("A senha atual informada é inválida");
         }
         this.setSenha(senhaNova);
-        this.setModificacao(LocalDateTime.now());
     }
 
     private void validarSenha(String senha) {
@@ -91,6 +58,9 @@ public class Usuario extends Pessoa {
         }
     }
 
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
 
     public String getUsuario() {
         return usuario;
@@ -114,7 +84,6 @@ public class Usuario extends Pessoa {
 
     public void setAtivo(Boolean ativo) {
         this.ativo = ativo;
-        this.setModificacao(LocalDateTime.now());
     }
 
     public Set<Permissao> getPermissoes() {
@@ -123,12 +92,17 @@ public class Usuario extends Pessoa {
 
     private void setPermissoes(Set<Permissao> permissoes) {
         this.permissoes = permissoes;
-        this.setModificacao(LocalDateTime.now());
     }
 
     public void adicionarPermissao(Permissao permissao) {
         if (Objects.isNull(permissao))
             throw new RuntimeException("A permissão não pode ser nula");
+
+        if (Objects.isNull(this.permissoes)) {
+            this.setPermissoes(new HashSet<>());
+            this.adicionarPermissao(permissao);
+        }
+
         this.permissoes.add(permissao);
     }
 

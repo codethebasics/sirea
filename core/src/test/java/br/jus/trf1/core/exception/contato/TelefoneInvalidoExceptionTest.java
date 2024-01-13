@@ -13,7 +13,12 @@ class TelefoneInvalidoExceptionTest {
     void dadoUmTelefoneInvalido_quandoSetarTelefone_entaoLancaTelefoneInvalidoException() {
         // given / when / then
         Exception exception = assertThrows(TelefoneInvalidoException.class, () -> {
-            new Contato(DDDEnum.DF_61, "33471304", "9857704", "bruno.ferreira@trf1.jus.br");
+            new Contato.Builder()
+                    .ddd(DDDEnum.DF_61)
+                    .fixo("33471304")
+                    .movel("9857704")
+                    .email("bruno.ferreira@trf1.jus.br")
+                    .build();
         });
 
         assertEquals(ContatoErroEnum.TELEFONE_INVALIDO.getMensagem(), exception.getMessage());
