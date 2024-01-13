@@ -11,7 +11,7 @@ import java.util.Set;
 public interface BuscarProcessoGateway {
 
     Optional<Processo> buscar(Processo processo);
-    Optional<Processo> busscar(String numeroProcesso);
+    Optional<Processo> buscar(String numeroProcesso);
     Set<Processo> listar();
     Set<Processo> listar(OrgaoJudiciarioEnum orgaoJudiciario);
     Set<Processo> listar(TribunalEnum tribunal);

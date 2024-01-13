@@ -11,21 +11,16 @@ import java.util.Objects;
 /**
  * @author bruno.carneiro (tr301605)
  */
-public class CriarUsuarioCommand implements CriarUsuarioUC {
+public class CriarUsuarioAction implements CriarUsuarioUC {
 
     private final BuscarUsuarioUC buscarUsuario;
 
-    public CriarUsuarioCommand(BuscarUsuarioUC buscarUsuario) {
+    public CriarUsuarioAction(BuscarUsuarioUC buscarUsuario) {
         this.buscarUsuario = buscarUsuario;
     }
 
     @Override
     public Usuario criar(Usuario usuario) throws CriarUsuarioException, BuscarUsuarioException {
-        System.out.println("Application::CriarUsuarioCommand.criar");
-        System.out.println(usuario);
-        Usuario usuarioDB = this.buscarUsuario.peloUsuario(usuario.getUsuario());
-        if (Objects.nonNull(usuarioDB))
-            throw new CriarUsuarioException("O usuário informado já está cadastrado");
         return usuario;
     }
 }

@@ -56,6 +56,8 @@ public class DocumentoOficial {
     }
 
     public void setEmissao(LocalDate emissao) {
+        if (emissao.isAfter(LocalDate.now()))
+            throw new RuntimeException("O documento não pode ter uma data de emissão futura");
         this.emissao = emissao;
     }
 

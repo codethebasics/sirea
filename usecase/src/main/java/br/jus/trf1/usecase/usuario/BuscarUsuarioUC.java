@@ -3,6 +3,9 @@ package br.jus.trf1.usecase.usuario;
 import br.jus.trf1.core.domain.Usuario;
 import br.jus.trf1.usecase.usuario.exceptions.BuscarUsuarioException;
 
+import java.util.Optional;
+import java.util.Set;
+
 /**
  * Caso de uso Buscar Usuário
  *
@@ -21,7 +24,7 @@ public interface BuscarUsuarioUC {
      * @return usuário pesquisado
      * @throws BuscarUsuarioException no caso de erro durante busca de usuário
      */
-    Usuario peloId(Long id) throws BuscarUsuarioException;
+    Optional<Usuario> peloId(Long id) throws BuscarUsuarioException;
 
 
     /**
@@ -35,7 +38,7 @@ public interface BuscarUsuarioUC {
      * @return usuário pesquisado
      * @throws BuscarUsuarioException em caso de erro durante busca de usuário
      */
-    Usuario peloUsuario(String usuario) throws BuscarUsuarioException;
+    Optional<Usuario> peloUsuario(String usuario) throws BuscarUsuarioException;
 
     /**
      * <ul>
@@ -47,5 +50,16 @@ public interface BuscarUsuarioUC {
      * @return usuário pesquisado
      * @throws BuscarUsuarioException no caso de erro durante busca do usuário
      */
-    Usuario peloEmail(String email) throws BuscarUsuarioException;
+    Optional<Usuario> peloEmail(String email) throws BuscarUsuarioException;
+
+    /**
+     * <ul>
+     *     <li>Quando listar</li>
+     *     <li>Deve retornar lista de usuários</li>
+     * </ul>
+     *
+     * @return lista de usuários
+     * @throws BuscarUsuarioException em caso de erro durante listagem dos usuários
+     */
+    Set<Usuario> listar() throws BuscarUsuarioException;
 }

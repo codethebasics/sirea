@@ -16,9 +16,13 @@ class EmailInvalidoExceptionTest {
     @Test
     void dadoUmEmailInvalido_quandoSetarEmail_entaoLancaEmailInvalidoException() {
         // given / when / then
-        Exception exception = assertThrows(EmailInvalidoException.class, () -> {
-            new Contato(DDDEnum.DF_61, "33471304", "985770401", "email");
-        });
+        Exception exception = assertThrows(EmailInvalidoException.class, () ->
+            new Contato.Builder()
+                    .ddd(DDDEnum.DF_61)
+                    .fixo("33471304")
+                    .movel("985770401")
+                    .email("email")
+                    .build());
 
         assertEquals(ContatoErroEnum.EMAIL_INVALIDO.getMensagem(), exception.getMessage());
     }
