@@ -1,9 +1,6 @@
 package br.jus.trf1.core.domain;
 
-import br.jus.trf1.core.enums.DDDEnum;
-import br.jus.trf1.core.enums.OrgaoEmissorEnum;
-import br.jus.trf1.core.enums.TipoDocumentoOficialEnum;
-import br.jus.trf1.core.enums.UnidadeFederativaEnum;
+import br.jus.trf1.core.enums.*;
 import br.jus.trf1.core.exception.contato.EmailInvalidoException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -67,6 +64,10 @@ class ContatoTest {
                 OrgaoEmissorEnum.SSP,
                 TipoDocumentoOficialEnum.RG);
 
+        Set<PaisesEnum> nacionalidades = new HashSet<>();
+        nacionalidades.add(PaisesEnum.BRASIL);
+        nacionalidades.add(PaisesEnum.ISRAEL);
+
         Set<DocumentoOficial> documentos = new HashSet<>();
         documentos.add(documentoOficial);
 
@@ -74,7 +75,7 @@ class ContatoTest {
         pessoa.setNome("Bruno Caneiro");
         pessoa.setDataNascimento(LocalDate.of(1987, 6, 29));
         pessoa.setNaturalidade(UnidadeFederativaEnum.DF);
-        pessoa.setNacionalidade("Brasil");
+        pessoa.setNacionalidades(nacionalidades);
         pessoa.setDocumentosOficiais(documentos);
         pessoa.setContato(contato);
         pessoa.setEndereco(endereco);

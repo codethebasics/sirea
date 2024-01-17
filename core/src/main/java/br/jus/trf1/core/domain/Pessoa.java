@@ -2,6 +2,7 @@ package br.jus.trf1.core.domain;
 
 import br.jus.trf1.core.enums.GeneroEnum;
 import br.jus.trf1.core.enums.OcupacaoProfissionalEnum;
+import br.jus.trf1.core.enums.PaisesEnum;
 import br.jus.trf1.core.enums.UnidadeFederativaEnum;
 
 import java.time.LocalDate;
@@ -23,13 +24,14 @@ public class Pessoa {
     private GeneroEnum genero;
     private OcupacaoProfissionalEnum ocupacaoProfissional;
     private UnidadeFederativaEnum naturalidade;
-    private String nacionalidade;
+    private Set<PaisesEnum> nacionalidades;
     private Set<DocumentoOficial> documentosOficiais;
     private Contato contato;
     private Endereco endereco;
 
     public Pessoa() {
         this.setDocumentosOficiais(new HashSet<>());
+        this.setGenero(GeneroEnum.OUTRO);
     }
 
     private Pessoa(
@@ -40,7 +42,7 @@ public class Pessoa {
             GeneroEnum genero,
             OcupacaoProfissionalEnum ocupacaoProfissional,
             UnidadeFederativaEnum naturalidade,
-            String nacionalidade,
+            Set<PaisesEnum> nacionalidades,
             Set<DocumentoOficial> documentosOficiais,
             Contato contato,
             Endereco endereco) {
@@ -51,10 +53,14 @@ public class Pessoa {
         this.setGenero(genero);
         this.setOcupacaoProfissional(ocupacaoProfissional);
         this.setNaturalidade(naturalidade);
-        this.setNacionalidade(nacionalidade);
+        this.setNacionalidades(nacionalidades);
         this.setDocumentosOficiais(documentosOficiais);
         this.setContato(contato);
         this.setEndereco(endereco);
+    }
+
+    void adicionarNacionalidade(PaisesEnum nacionalidade) {
+
     }
 
     void adicionarDocumentoOficial(DocumentoOficial documentoOficial) {
@@ -132,12 +138,12 @@ public class Pessoa {
         this.naturalidade = naturalidade;
     }
 
-    public String getNacionalidade() {
-        return nacionalidade;
+    public Set<PaisesEnum> getNacionalidades() {
+        return nacionalidades;
     }
 
-    public void setNacionalidade(String nacionalidade) {
-        this.nacionalidade = nacionalidade;
+    public void setNacionalidades(Set<PaisesEnum> nacionalidade) {
+        this.nacionalidades = nacionalidade;
     }
 
     public Set<DocumentoOficial> getDocumentosOficiais() {
@@ -175,7 +181,7 @@ public class Pessoa {
         private GeneroEnum genero;
         private OcupacaoProfissionalEnum ocupacaoProfissional;
         private UnidadeFederativaEnum naturalidade;
-        private String nacionalidade;
+        private Set<PaisesEnum> nacionalidades;
         private Set<DocumentoOficial> documentosOficiais;
         private Contato contato;
         private Endereco endereco;
@@ -215,8 +221,8 @@ public class Pessoa {
             return this;
         }
 
-        public Builder nacionalidade(String nacionalidade) {
-            this.nacionalidade = nacionalidade;
+        public Builder nacionalidades(Set<PaisesEnum> nacionalidades) {
+            this.nacionalidades = nacionalidades;
             return this;
         }
 
@@ -244,7 +250,7 @@ public class Pessoa {
                     genero,
                     ocupacaoProfissional,
                     naturalidade,
-                    nacionalidade,
+                    nacionalidades,
                     documentosOficiais,
                     contato,
                     endereco);

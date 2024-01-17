@@ -27,7 +27,7 @@ public interface CriarPessoaUC {
      *
      * @param pessoa pessoa a ser criada
      * @return pessoa criada
-     * @throws RuntimeException
+     * @throws RuntimeException em caso de erro durante criação da pessoa
      */
     Pessoa criar(Pessoa pessoa) throws CriarPessoaException;
 }

@@ -7,7 +7,6 @@ import br.jus.trf1.core.enums.TribunalEnum;
 import br.jus.trf1.core.exception.processo.ProcessoException;
 import br.jus.trf1.gateway.processo.BuscarProcessoGateway;
 import br.jus.trf1.usecase.processo.BuscarProcessoUC;
-import jdk.internal.joptsimple.internal.Strings;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -29,6 +28,7 @@ public class BuscarProcessoAction implements BuscarProcessoUC {
 
     @Override
     public Optional<Processo> buscar(Processo processo) throws ProcessoException {
+
         if (Objects.isNull(processo))
             throw new ProcessoException("O processo deve ser informado");
 
@@ -41,7 +41,8 @@ public class BuscarProcessoAction implements BuscarProcessoUC {
 
     @Override
     public Optional<Processo> buscar(String numeroProcesso) throws ProcessoException {
-        if (Strings.isNullOrEmpty(numeroProcesso))
+
+        if (numeroProcesso.isEmpty())
             throw new ProcessoException("O número do processo deve ser informado");
 
         try {
