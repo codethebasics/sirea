@@ -18,6 +18,10 @@ public class DocumentoOficial {
     private OrgaoEmissorEnum orgaoEmissor;
     private TipoDocumentoOficialEnum tipoDocumentoOficial;
 
+    public DocumentoOficial() {
+
+    }
+
     public DocumentoOficial(
             String numero,
             LocalDate emissao,
