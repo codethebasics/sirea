@@ -3,10 +3,7 @@ package trf1.jus.br.infrastructure.service;
 import br.jus.trf1.core.domain.Contato;
 import br.jus.trf1.core.domain.Endereco;
 import br.jus.trf1.core.domain.Pessoa;
-import br.jus.trf1.core.enums.GeneroEnum;
-import br.jus.trf1.core.enums.OcupacaoProfissionalEnum;
-import br.jus.trf1.core.enums.PaisesEnum;
-import br.jus.trf1.core.enums.UnidadeFederativaEnum;
+import br.jus.trf1.core.enums.*;
 import br.jus.trf1.gateway.pessoa.BuscarPessoaGateway;
 import org.springframework.stereotype.Service;
 
@@ -43,6 +40,7 @@ public class BuscarPessoaService implements BuscarPessoaGateway {
                 .genero(GeneroEnum.MASCULINO)
                 .ocupacaoProfissional(OcupacaoProfissionalEnum.SERVIDOR_CARREIRAS_PODER_JUDICIARIO)
                 .contato(new Contato.Builder()
+                        .ddd(DDDEnum.DF_61)
                         .fixo("33471304")
                         .movel("985770401")
                         .email("bruno.carneiro312@gmail.com")

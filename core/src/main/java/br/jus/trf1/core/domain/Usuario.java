@@ -20,6 +20,10 @@ public class Usuario extends Pessoa {
     private Boolean ativo;
     private Set<Permissao> permissoes;
 
+    public Usuario() {
+
+    }
+
     public Usuario(String usuario, String senha) {
         this.setUsuario(usuario);
         this.setSenha(senha);

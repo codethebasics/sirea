@@ -35,27 +35,19 @@ public class PessoaController {
         BuscarPessoaResponse response;
 
         try {
-            // Busca pessoa pelo email
             Pessoa pessoa = this.buscarPessoaUC.peloEmail(email);
 
-            // Verifica se pessoa foi retornada
             if (Objects.isNull(pessoa))
                 throw new PessoaNaoEncontradaException("Pessoa não encontrada");
 
-            // Converte a pessoa retornada para um DTO
             PessoaDTO pessoaDTO = PessoaMapper.toDTO(pessoa);
-
-            // Cria o response da requisição
             response = new BuscarPessoaResponse(pessoaDTO);
 
-            // Retorna a requisição
             return ResponseEntity.status(HttpStatus.OK).body(response);
         }
-        // Pessoa não encontrada
         catch (PessoaNaoEncontradaException e1) {
             return ResponseEntity.notFound().build();
         }
-        // Erro desconhecido
         catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
@@ -64,10 +56,12 @@ public class PessoaController {
     @PostMapping
     public ResponseEntity<CriarPessoaResponse> criarPessoa(@RequestBody CriarPessoaRequest request) {
         try {
-            return ResponseEntity.status(HttpStatus.OK)
+            return ResponseEntity
+                    .status(HttpStatus.OK)
                     .body(new CriarPessoaResponse(null, "Pessoa cadastrada com sucesso"));
         } catch (Exception e) {
-            return ResponseEntity.badRequest()
+            return ResponseEntity
+                    .badRequest()
                     .body(new CriarPessoaResponse(null, "Erro durante cadastro"));
         }
     }

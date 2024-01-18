@@ -28,7 +28,8 @@ public class BuscarPessoaAction implements BuscarPessoaUC {
                 throw new PessoaNaoEncontradaException("Pessoa não encontrada");
 
             return pessoa;
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             throw new PessoaNaoEncontradaException("Erro durante consulta por ID", e);
         }
     }
