@@ -1,19 +1,16 @@
 package trf1.jus.br.infrastructure.entity;
 
+import br.jus.trf1.core.domain.DocumentoOficial;
 import br.jus.trf1.core.enums.OrgaoEmissorEnum;
 import br.jus.trf1.core.enums.TipoDocumentoOficialEnum;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.Set;
 
-@Getter
-@Setter
 @Entity
 @Table(name = "documentos_oficiais")
-public class DocumentoOficialEntity {
+public class DocumentoOficialEntity extends DocumentoOficial {
 
     @Id
     @Column(name = "id")
@@ -37,4 +34,16 @@ public class DocumentoOficialEntity {
 
     @ManyToMany(mappedBy = "documentosOficiais")
     private Set<PessoaEntity> pessoa;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Set<PessoaEntity> getPessoa() {
+        return pessoa;
+    }
 }

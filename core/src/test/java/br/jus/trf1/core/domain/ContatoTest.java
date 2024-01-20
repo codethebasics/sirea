@@ -42,44 +42,4 @@ class ContatoTest {
         // then
         assertEquals("fulano@trf1.jus.br", emailValido);
     }
-
-    @Test
-    void teste() {
-        Contato contato = new Contato(
-                DDDEnum.DF_61,
-                "33471304",
-                "985770401",
-                "bruno.ferreira@trf1.jus.br");
-
-        Endereco endereco = new Endereco(
-                "70765110",
-                "SQN 312 Bloco K",
-                "Asa Norte",
-                "Brasília",
-                UnidadeFederativaEnum.DF);
-
-        DocumentoOficial documentoOficial = new DocumentoOficial(
-                "111",
-                LocalDate.now(),
-                OrgaoEmissorEnum.SSP,
-                TipoDocumentoOficialEnum.RG);
-
-        Set<PaisesEnum> nacionalidades = new HashSet<>();
-        nacionalidades.add(PaisesEnum.BRASIL);
-        nacionalidades.add(PaisesEnum.ISRAEL);
-
-        Set<DocumentoOficial> documentos = new HashSet<>();
-        documentos.add(documentoOficial);
-
-        Pessoa pessoa = new Pessoa();
-        pessoa.setNome("Bruno Caneiro");
-        pessoa.setDataNascimento(LocalDate.of(1987, 6, 29));
-        pessoa.setNaturalidade(UnidadeFederativaEnum.DF);
-        pessoa.setNacionalidades(nacionalidades);
-        pessoa.setDocumentosOficiais(documentos);
-        pessoa.setContato(contato);
-        pessoa.setEndereco(endereco);
-
-        System.out.println(pessoa);
-    }
 }
