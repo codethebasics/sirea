@@ -4,6 +4,7 @@ import br.jus.trf1.core.domain.Pessoa;
 import br.jus.trf1.usecase.pessoa.exceptions.PessoaNaoEncontradaException;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  *
@@ -35,7 +36,7 @@ public interface BuscarPessoaUC {
      * @param nome nome da pessoa a ser pesquisada
      * @return pessoa
      */
-    List<Pessoa> peloNome(String nome) throws PessoaNaoEncontradaException;
+    Set<Pessoa> peloNome(String nome) throws PessoaNaoEncontradaException;
 
     /**
      * <ul>

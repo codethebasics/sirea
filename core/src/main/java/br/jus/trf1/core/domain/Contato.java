@@ -45,7 +45,7 @@ public class Contato {
     public void setFixo(String fixo) {
         final int FIXO_LENGTH = 8;
         if (fixo.length() != FIXO_LENGTH) {
-            throw new TelefoneInvalidoException();
+            throw new TelefoneInvalidoException("O telefone fixo deve conter 8 dígitos");
         }
         this.fixo = fixo;
     }
@@ -58,7 +58,7 @@ public class Contato {
         final int MOVEL_MIN_LENGTH = 8;
         final int MOVEL_MAX_LENGTH = 9;
         if (movel.length() != MOVEL_MIN_LENGTH && movel.length() != MOVEL_MAX_LENGTH) {
-            throw new TelefoneInvalidoException();
+            throw new TelefoneInvalidoException("O telefone móvel deve ter entre 8 e 9 dítigos");
         }
         this.movel = movel;
     }

@@ -1,5 +1,6 @@
 package trf1.jus.br.infrastructure.entity;
 
+import br.jus.trf1.core.domain.Pessoa;
 import br.jus.trf1.core.enums.GeneroEnum;
 import br.jus.trf1.core.enums.OcupacaoProfissionalEnum;
 import br.jus.trf1.core.enums.PaisesEnum;
@@ -9,6 +10,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Getter
@@ -36,6 +38,14 @@ public class PessoaEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = "genero")
     private GeneroEnum genero;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "criacao")
+    private LocalDateTime criacao;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "modificacao")
+    private LocalDateTime modificacao;
 
     @ManyToMany
     @JoinTable(
@@ -76,4 +86,32 @@ public class PessoaEntity {
             inverseJoinColumns = @JoinColumn(name = "endereco_id"))
     private Set<EnderecoEntity> enderecos;
 
+    public PessoaEntity(
+            String nome,
+            String nomeSocial,
+            LocalDate dataNascimento,
+            LocalDate dataFalecimento,
+            GeneroEnum genero,
+            LocalDateTime criacao,
+            LocalDateTime modificacao,
+            Set<OcupacaoProfissionalEntity> ocupacoesProfissionais,
+            UnidadeFederativaEntity unidadeFederativa,
+            Set<NacionalidadeEntity> nacionalidades,
+            Set<DocumentoOficialEntity> documentosOficiais,
+            ContatoEntity contato,
+            Set<EnderecoEntity> enderecos) {
+        this.nome = nome;
+        this.nomeSocial = nomeSocial;
+        this.dataNascimento = dataNascimento;
+        this.dataFalecimento = dataFalecimento;
+        this.genero = genero;
+        this.criacao = criacao;
+        this.modificacao = modificacao;
+        this.ocupacoesProfissionais = ocupacoesProfissionais;
+        this.unidadeFederativa = unidadeFederativa;
+        this.nacionalidades = nacionalidades;
+        this.documentosOficiais = documentosOficiais;
+        this.contato = contato;
+        this.enderecos = enderecos;
+    }
 }

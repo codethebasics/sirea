@@ -7,6 +7,7 @@ import br.jus.trf1.usecase.pessoa.exceptions.PessoaNaoEncontradaException;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * @author bruno.carneiro (tr301605)
@@ -35,7 +36,7 @@ public class BuscarPessoaAction implements BuscarPessoaUC {
     }
 
     @Override
-    public List<Pessoa> peloNome(String nome) throws PessoaNaoEncontradaException {
+    public Set<Pessoa> peloNome(String nome) throws PessoaNaoEncontradaException {
         try {
             return this.buscarPessoaGateway.peloNome(nome);
         } catch (Exception e) {
