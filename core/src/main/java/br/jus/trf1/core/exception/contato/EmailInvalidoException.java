@@ -1,6 +1,6 @@
 package br.jus.trf1.core.exception.contato;
 
-import br.jus.trf1.core.exception.contato.errors.ContatoErroEnum;
+import br.jus.trf1.core.exception.contato.erros.ContatoErroEnum;
 
 /**
  * @author bruno.carneiro (tr301605)

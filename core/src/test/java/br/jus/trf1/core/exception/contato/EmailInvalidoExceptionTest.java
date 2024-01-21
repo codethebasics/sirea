@@ -1,12 +1,9 @@
 package br.jus.trf1.core.exception.contato;
 
 import br.jus.trf1.core.domain.Contato;
-import br.jus.trf1.core.domain.Pessoa;
 import br.jus.trf1.core.enums.DDDEnum;
-import br.jus.trf1.core.exception.contato.errors.ContatoErroEnum;
+import br.jus.trf1.core.exception.contato.erros.ContatoErroEnum;
 import org.junit.jupiter.api.Test;
-
-import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;

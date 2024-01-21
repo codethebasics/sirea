@@ -5,6 +5,7 @@ import br.jus.trf1.core.exception.contato.EmailInvalidoException;
 import br.jus.trf1.core.exception.contato.TelefoneInvalidoException;
 
 import java.util.Objects;
+import java.util.function.Predicate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -43,9 +44,8 @@ public class Contato {
     }
 
     public void setFixo(String fixo) {
-        final int FIXO_LENGTH = 8;
-        if (fixo.length() != FIXO_LENGTH) {
-            throw new TelefoneInvalidoException("O telefone fixo deve conter 8 dígitos");
+        if (!this.fixoIsValid.test(fixo)) {
+            throw new TelefoneInvalidoException();
         }
         this.fixo = fixo;
     }
@@ -55,10 +55,8 @@ public class Contato {
     }
 
     public void setMovel(String movel) {
-        final int MOVEL_MIN_LENGTH = 8;
-        final int MOVEL_MAX_LENGTH = 9;
-        if (movel.length() != MOVEL_MIN_LENGTH && movel.length() != MOVEL_MAX_LENGTH) {
-            throw new TelefoneInvalidoException("O telefone móvel deve ter entre 8 e 9 dítigos");
+        if (!this.movelIsValid.test(movel)) {
+            throw new TelefoneInvalidoException();
         }
         this.movel = movel;
     }
@@ -68,10 +66,7 @@ public class Contato {
     }
 
     public void setEmail(String email) {
-        final String regex = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,}$";
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(email);
-        if (!matcher.matches()) {
+        if (!this.emailIsValid.test(email)) {
             throw new EmailInvalidoException();
         }
         this.email = email;
@@ -99,6 +94,24 @@ public class Contato {
                 ", email='" + email + '\'' +
                 '}';
     }
+
+    public Predicate<String> movelIsValid = (movel) -> !Objects.isNull(movel)
+        && Boolean.logicalOr(movel.length() == 8, movel.length() == 9);
+
+    public Predicate<String> fixoIsValid = (fixo) -> !Objects.isNull(fixo)
+        && fixo.length() == 8;
+
+    public Predicate<String> emailIsValid = (email) -> {
+        final String regex = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,}$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
+    };
+
+    public Predicate<Contato> isValid = contato ->
+            fixoIsValid.test(contato.getFixo())
+                    && movelIsValid.test(contato.getFixo())
+                    && emailIsValid.test(contato.getEmail());
 
     public static class Builder {
         private DDDEnum ddd;

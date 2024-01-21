@@ -1,4 +1,4 @@
-package br.jus.trf1.core.exception.contato.errors;
+package br.jus.trf1.core.exception.contato.erros;
 
 public enum ContatoErroEnum {
     TELEFONE_INVALIDO("Telefone inválido"),

@@ -1,4 +1,4 @@
-package br.jus.trf1.usecase.contato;
+package br.jus.trf1.gateway.contato;
 
 import br.jus.trf1.core.domain.Contato;
 import br.jus.trf1.core.enums.DDDEnum;
@@ -6,12 +6,11 @@ import br.jus.trf1.core.enums.DDDEnum;
 import java.util.List;
 import java.util.Set;
 
-public interface BuscarContatoUC {
+public interface BuscarContatoGateway {
 
     Set<Contato> listarPeloDDD(DDDEnum ddd);
 
     Contato buscarPeloEmail(String email);
-
 
     Set<Contato> listarPorParteDoNome(String nome);
 
