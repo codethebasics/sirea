@@ -3,14 +3,11 @@ package trf1.jus.br.infrastructure.controller.contato;
 import br.jus.trf1.core.domain.Contato;
 import br.jus.trf1.usecase.contato.CriarContatoUC;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import trf1.jus.br.infrastructure.controller.BaseResponse;
 import trf1.jus.br.infrastructure.dto.contato.CriarContatoRequest;
 import trf1.jus.br.infrastructure.dto.contato.CriarContatoResponse;
-import trf1.jus.br.infrastructure.entity.ContatoEntity;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -57,14 +54,10 @@ public class ContatoController {
         } catch (Exception e) {
             return BaseResponse.<CriarContatoResponse>builder()
                     .statusCode(HttpStatus.INTERNAL_SERVER_ERROR.value())
-                    .message("Erro durante a criação do usuário: " + e.getMessage())
+                    .message("Erro durante a criação do contato: " + e.getMessage())
                     .at(LocalDateTime.now())
                     .build();
         }
     }
 
-    @GetMapping
-    public ResponseEntity<String> ping() {
-        return ResponseEntity.ok("pong");
-    }
 }

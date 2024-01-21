@@ -24,10 +24,10 @@ public class ContatoEntity {
     @Column(name = "fixo")
     private String fixo;
 
-    @Column(name = "movel")
+    @Column(name = "movel", unique = true)
     private String movel;
 
-    @Column(name = "email")
+    @Column(name = "email", unique = true)
     private String email;
 
     public ContatoEntity() {

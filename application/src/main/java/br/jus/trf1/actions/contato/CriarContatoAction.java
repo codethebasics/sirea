@@ -4,6 +4,7 @@ import br.jus.trf1.core.domain.Contato;
 import br.jus.trf1.core.exception.contato.EmailInvalidoException;
 import br.jus.trf1.core.exception.contato.TelefoneInvalidoException;
 import br.jus.trf1.gateway.contato.CriarContatoGateway;
+import br.jus.trf1.usecase.contato.BuscarContatoUC;
 import br.jus.trf1.usecase.contato.CriarContatoUC;
 
 import java.util.Objects;
@@ -21,9 +22,11 @@ import java.util.Objects;
 public class CriarContatoAction implements CriarContatoUC {
 
     private final CriarContatoGateway criarContatoGateway;
+    private final BuscarContatoUC buscarContatoUC;
 
-    public CriarContatoAction(CriarContatoGateway criarContatoGateway) {
+    public CriarContatoAction(CriarContatoGateway criarContatoGateway, BuscarContatoUC buscarContatoUC) {
         this.criarContatoGateway = criarContatoGateway;
+        this.buscarContatoUC = buscarContatoUC;
     }
 
     @Override
@@ -39,13 +42,17 @@ public class CriarContatoAction implements CriarContatoUC {
             if (Objects.isNull(contato.getEmail()))
                 throw new RuntimeException("O Email deve ser informado");
 
-        } catch (EmailInvalidoException emailInvalidoException) {
+            if (!Objects.isNull(this.buscarContatoUC.buscarPeloEmail(contato.getEmail())))
+                throw new RuntimeException("O contato informado já existe");
+
+            return criarContatoGateway.criar(contato);
+
+        }
+        catch (EmailInvalidoException emailInvalidoException) {
             throw new RuntimeException("O e-mail informado é inválido", emailInvalidoException);
-        } catch (TelefoneInvalidoException telefoneInvalidoException) {
+        }
+        catch (TelefoneInvalidoException telefoneInvalidoException) {
             throw new RuntimeException("O telefone informado é inválido", telefoneInvalidoException);
         }
-
-        return criarContatoGateway.criar(contato);
-
     }
 }
