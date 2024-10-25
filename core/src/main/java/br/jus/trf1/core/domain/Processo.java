@@ -259,8 +259,8 @@ public class Processo {
         return this.getNumeroProcessoFormatado().replaceFirst("^0+", "");
     }
 
-    public String getNumeroProcessoSemFormatacao() {
-        return this.getNumeroProcesso().replaceAll("[^0-9]", "");
+    public static String getNumeroProcessoSemFormatacao(String processo) {
+        return processo.replaceAll("[^0-9]", "");
     }
 
     public void setNumeroProcesso() {
