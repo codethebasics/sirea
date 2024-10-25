@@ -21,13 +21,14 @@ class ProcessoTest {
     void dadoUmProcessoValido_quandoValidarProcesso_entaoRetornaTrue() {
 
         // given
-        Processo processo = new Processo(
-                "0002984",
-                "22",
-                "2015",
-                OrgaoJudiciarioEnum.JF,
-                TribunalEnum.TRF1,
-                "3603");
+        Processo processo = new Processo.Builder()
+                .numeroSequencial("0002984")
+                .digitoVerificador("22")
+                .anoDeAjuizamento("2015")
+                .orgaoDoPoderJudiciario(OrgaoJudiciarioEnum.JF)
+                .tribunal(TribunalEnum.TRF1)
+                .origem(OrigensTRF1Enum.SUBSECAO_JUDICIARIA_DE_SINOP)
+                .build();
 
         // when
         boolean isProcessoValid = processo.isNumeroProcessoValid();
@@ -77,29 +78,32 @@ class ProcessoTest {
     @Test
     void dadoUmNumeroDeProcessoInvalido_quandoCriarProcesso_entaoDeveLancarException() {
 
-        // given / when / then
-        assertThrows(RuntimeException.class, () -> {
-            new Processo(
-                    "0002984",
-                    "22",
-                    "2016",
-                    OrgaoJudiciarioEnum.JF,
-                    TribunalEnum.TRF1,
-                    OrigensTRF1Enum.SUBSECAO_JUDICIARIA_DE_SINOP);
-        }, "Espera-se que uma excetion seja lançada");
+        // given / when
+        String message = assertThrows(RuntimeException.class, () -> new Processo.Builder()
+                .numeroSequencial("0002984")
+                .digitoVerificador("22")
+                .anoDeAjuizamento("2015")
+                .orgaoDoPoderJudiciario(OrgaoJudiciarioEnum.JF)
+                .tribunal(TribunalEnum.TRF1)
+                .origem(OrigensTRF1Enum.SECAO_JUDICIARIA_DO_DISTRITO_FEDERAL)
+                .build(), "Espera-se que uma excetion seja lançada").getMessage();
+
+        // then
+        assertEquals("Número do processo inválido", message);
     }
 
     @Test
     void dadoUmNumeroDeProcessoCompleto_quandoObterNumeroDoProcessoFormatado_EntaoDeveRetornarNumeroProcessoFormatado() {
 
         // given
-        Processo processo = new Processo(
-                "0002984",
-                "22",
-                "2015",
-                OrgaoJudiciarioEnum.JF,
-                TribunalEnum.TRF1,
-                OrigensTRF1Enum.SUBSECAO_JUDICIARIA_DE_SINOP);
+        Processo processo = new Processo.Builder()
+                .numeroSequencial("0002984")
+                .digitoVerificador("22")
+                .anoDeAjuizamento("2015")
+                .orgaoDoPoderJudiciario(OrgaoJudiciarioEnum.JF)
+                .tribunal(TribunalEnum.TRF1)
+                .origem(OrigensTRF1Enum.SUBSECAO_JUDICIARIA_DE_SINOP)
+                .build();
 
         // when
         String numeroProcessoFormatado = processo.getNumeroProcessoFormatado();
@@ -112,13 +116,14 @@ class ProcessoTest {
     void dadoUmNumeroDeProcessoCompleto_quandoObterNumeroDoProcessoSemZerosAEsquerda_entaoDeveRetornarNumeroProcessoSemZerosAEsquerda() {
 
         // given
-        Processo processo = new Processo(
-                "0002984",
-                "22",
-                "2015",
-                OrgaoJudiciarioEnum.JF,
-                TribunalEnum.TRF1,
-                OrigensTRF1Enum.SUBSECAO_JUDICIARIA_DE_SINOP);
+        Processo processo = new Processo.Builder()
+                .numeroSequencial("0002984")
+                .digitoVerificador("22")
+                .anoDeAjuizamento("2015")
+                .orgaoDoPoderJudiciario(OrgaoJudiciarioEnum.JF)
+                .tribunal(TribunalEnum.TRF1)
+                .origem(OrigensTRF1Enum.SUBSECAO_JUDICIARIA_DE_SINOP)
+                .build();
 
         // when
         String numeroProcessoFormatado = processo.getNumeroProcessoSemZerosAEsquerda();
@@ -131,13 +136,14 @@ class ProcessoTest {
     void dadoUmNumeroDeProcessoCompleto_quandoObterNumeroDoProcessoFormatadoSemZerosAEsquerda_entaoDeveRetornarNumeroProcessoFormatadoSemZerosAEsquerda() {
 
         // given
-        Processo processo = new Processo(
-                "0002984",
-                "22",
-                "2015",
-                OrgaoJudiciarioEnum.JF,
-                TribunalEnum.TRF1,
-                OrigensTRF1Enum.SUBSECAO_JUDICIARIA_DE_SINOP);
+        Processo processo = new Processo.Builder()
+                .numeroSequencial("0002984")
+                .digitoVerificador("22")
+                .anoDeAjuizamento("2015")
+                .orgaoDoPoderJudiciario(OrgaoJudiciarioEnum.JF)
+                .tribunal(TribunalEnum.TRF1)
+                .origem(OrigensTRF1Enum.SUBSECAO_JUDICIARIA_DE_SINOP)
+                .build();
 
         // when
         String numeroProcessoFormatado = processo.getNumeroProcessoFormatadoSemZerosAEsquerda();

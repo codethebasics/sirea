@@ -55,29 +55,13 @@ public class Processo {
      * @param tribunal TR
      * @param origem OOOO
      */
-    public Processo(
+    private Processo(
             String numeroSequencial,
             String digitoVerificador,
             String anoDeAjuizamento,
             OrgaoJudiciarioEnum orgaoDoPoderJudiciario,
             TribunalEnum tribunal,
             OrigensTRF1Enum origem) {
-        this.setNumeroSequencial(numeroSequencial);
-        this.setDigitoVerificador(digitoVerificador);
-        this.setAnoDeAjuizamento(anoDeAjuizamento);
-        this.setOrgaoDoPoderJudiciario(orgaoDoPoderJudiciario);
-        this.setTribunal(tribunal);
-        this.setOrigem(origem);
-        this.setNumeroProcesso();
-    }
-
-    public Processo(
-            String numeroSequencial,
-            String digitoVerificador,
-            String anoDeAjuizamento,
-            OrgaoJudiciarioEnum orgaoDoPoderJudiciario,
-            TribunalEnum tribunal,
-            String origem) {
         this.setNumeroSequencial(numeroSequencial);
         this.setDigitoVerificador(digitoVerificador);
         this.setAnoDeAjuizamento(anoDeAjuizamento);
@@ -357,4 +341,58 @@ public class Processo {
         }
     }
 
+    public static class Builder {
+        private String numeroSequencial;
+        private String digitoVerificador;
+        private String anoDeAjuizamento;
+        private OrgaoJudiciarioEnum orgaoDoPoderJudiciario;
+        private TribunalEnum tribunal;
+        private OrigensTRF1Enum origem;
+        private String numeroProcesso;
+
+        public Builder numeroSequencial(String numeroSequencial) {
+            this.numeroSequencial = numeroSequencial;
+            return this;
+        }
+
+        public Builder digitoVerificador(String digitoVerificador) {
+            this.digitoVerificador = digitoVerificador;
+            return this;
+        }
+
+        public Builder anoDeAjuizamento(String anoDeAjuizamento) {
+            this.anoDeAjuizamento = anoDeAjuizamento;
+            return this;
+        }
+
+        public Builder orgaoDoPoderJudiciario(OrgaoJudiciarioEnum orgaoDoPoderJudiciario) {
+            this.orgaoDoPoderJudiciario = orgaoDoPoderJudiciario;
+            return this;
+        }
+
+        public Builder tribunal(TribunalEnum tribunal) {
+            this.tribunal = tribunal;
+            return this;
+        }
+
+        public Builder origem(OrigensTRF1Enum origem) {
+            this.origem = origem;
+            return this;
+        }
+
+        public Builder numeroProcesso(String numeroProcesso) {
+            this.numeroProcesso = numeroProcesso;
+            return this;
+        }
+
+        public Processo build() {
+            return new Processo(
+                    this.numeroSequencial,
+                    this.digitoVerificador,
+                    this.anoDeAjuizamento,
+                    this.orgaoDoPoderJudiciario,
+                    this.tribunal,
+                    this.origem);
+        }
+    }
 }
