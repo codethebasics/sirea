@@ -20,30 +20,11 @@ public class Usuario extends Pessoa {
     private Boolean ativo;
     private Set<Permissao> permissoes;
 
-    public Usuario() {
-
-    }
-
-    public Usuario(String usuario, String senha) {
-        this.setUsuario(usuario);
-        this.setSenha(senha);
-        this.setAtivo(false);
-        this.adicionarPermissao(new Permissao(PermissaoEnum.CADEXT));
-    }
-
-    public Usuario(String usuario, String senha, Boolean ativo) {
-        this.setUsuario(usuario);
-        this.setSenha(senha);
-        this.setAtivo(ativo);
-        this.adicionarPermissao(new Permissao(PermissaoEnum.CADEXT));
-    }
-
-    public Usuario(String usuario, String senha, Boolean ativo, Set<Permissao> permissoes) {
-        this.permissoes = permissoes;
-        this.setUsuario(usuario);
-        this.setSenha(senha);
-        this.setAtivo(ativo);
-        this.setPermissoes(permissoes);
+    private Usuario(Builder builder) {
+        this.setUsuario(builder.usuario);
+        this.setSenha(builder.senha);
+        this.setAtivo(builder.ativo);
+        this.setPermissoes(builder.permissoes);
     }
 
     public void alterarSenha(String senhaAntiga, String senhaNova) {
@@ -62,7 +43,7 @@ public class Usuario extends Pessoa {
         }
     }
 
-    public void setUsuario(String usuario) {
+    private void setUsuario(String usuario) {
         this.usuario = usuario;
     }
 
@@ -86,8 +67,16 @@ public class Usuario extends Pessoa {
         return ativo;
     }
 
-    public void setAtivo(Boolean ativo) {
+    private void setAtivo(Boolean ativo) {
         this.ativo = ativo;
+    }
+
+    public void ativar() {
+        this.setAtivo(Boolean.TRUE);
+    }
+
+    public void desativar() {
+        this.setAtivo(Boolean.FALSE);
     }
 
     public Set<Permissao> getPermissoes() {
@@ -96,6 +85,11 @@ public class Usuario extends Pessoa {
 
     private void setPermissoes(Set<Permissao> permissoes) {
         this.permissoes = permissoes;
+
+        // Caso nenhuma permissão tenha sido informada, adiciona permissão padrão
+        if (Objects.isNull(this.permissoes) || this.permissoes.isEmpty()) {
+            this.adicionarPermissao(new Permissao(PermissaoEnum.CADEXT));
+        }
     }
 
     public void adicionarPermissao(Permissao permissao) {
@@ -138,5 +132,46 @@ public class Usuario extends Pessoa {
                 ", ativo=" + ativo +
                 ", permissoes=" + permissoes +
                 '}';
+    }
+
+    public static class Builder {
+        private String usuario;
+        private String senha;
+        private Boolean ativo;
+        private Set<Permissao> permissoes;
+
+        public Builder usuario(String usuario) {
+            this.usuario = usuario;
+            return this;
+        }
+
+        public Builder senha(String senha) {
+            this.senha = senha;
+            return this;
+        }
+
+        public Builder ativo(Boolean ativo) {
+            this.ativo = ativo;
+            return this;
+        }
+
+        public Builder inativo() {
+            this.ativo = Boolean.FALSE;
+            return this;
+        }
+
+        public Builder ativo() {
+            this.ativo = Boolean.TRUE;
+            return this;
+        }
+
+        public Builder permissoes(Set<Permissao> permissoes) {
+            this.permissoes = permissoes;
+            return this;
+        }
+
+        public Usuario build() {
+            return new Usuario(this);
+        }
     }
 }

@@ -17,7 +17,10 @@ class UsuarioTest {
     @Test
     void alterarSenha() {
         // given
-        Usuario usuario = new Usuario("bruno.carneiro", "Abcd1234#!@");
+        Usuario usuario = new Usuario.Builder()
+                .usuario("bruno.carneiro")
+                .senha("Abcd1234#!@")
+                .build();
 
         String senhaAntiga = "Abcd1234#!@";
         String senhaNova = "Abcd1234#!@&";
@@ -33,7 +36,10 @@ class UsuarioTest {
     @DisplayName("Dado um usuário e uma permissão, quando adicionar permissão ao usuário então espera que a permissão seja adicionada")
     public void deveAdicionarPermissao() {
         // given
-        Usuario usuario = new Usuario("bruno.carneiro", "Abcd123!@#");
+        Usuario usuario = new Usuario.Builder()
+                .usuario("bruno.carneiro")
+                .senha("Abcd1234#!@")
+                .build();
 
         Permissao cadext = new Permissao(PermissaoEnum.CADEXT);
         Permissao adm = new Permissao(PermissaoEnum.ADMTRF1);
@@ -53,7 +59,10 @@ class UsuarioTest {
     @DisplayName("Dado um usuário e uma permissão, quando remover permissão do usuário então espera que a permissão seja removida")
     public void deveRemoverPermissao() {
         // given
-        Usuario usuario = new Usuario("bruno.carneiro", "Abcd123!@#");
+        Usuario usuario = new Usuario.Builder()
+                .usuario("bruno.carneiro")
+                .senha("Abcd1234#!@")
+                .build();
 
         Permissao cadext = new Permissao(PermissaoEnum.CADEXT);
         Permissao adm = new Permissao(PermissaoEnum.ADMTRF1);
@@ -74,13 +83,51 @@ class UsuarioTest {
     }
 
     @Test
+    @DisplayName("Dado um usuário sem permissões, quando criar usuário então deve adicionar permissão padrão")
     void deveCriarUsuarioComPermissaoPadrao() {
         // given
-        Usuario usuario = new Usuario("bruno.carneiro", "Abcd123!@#", true);
+        Usuario usuario = new Usuario.Builder()
+                .usuario("bruno.carneiro")
+                .senha("Abcd1234#!@")
+                .build();
 
         // when / then
         assertAll("Verificando permissões adicionadas", () -> {
             assertTrue(usuario.getPermissoes().stream().anyMatch(p -> p.getPermissao().equals(PermissaoEnum.CADEXT)));
         });
+    }
+
+    @Test
+    @DisplayName("Dado um usuário inativo, quando ativar então deve ativar usuário")
+    void deveAtivarUsuarioInativo() {
+        // given
+        Usuario usuario = new Usuario.Builder()
+                .usuario("bruno.carneiro")
+                .senha("Abcd1234#!@")
+                .inativo()
+                .build();
+
+        // when
+        usuario.ativar();
+
+        // then
+        assertTrue(usuario.getAtivo(), "O usuário deveria estar ativado");
+    }
+
+    @Test
+    @DisplayName("Dado um usuário ativo, quando desativar então deve desativar usuário")
+    void deveDesativarUsuarioAtivo() {
+        // given
+        Usuario usuario = new Usuario.Builder()
+                .usuario("bruno.carneiro")
+                .senha("Abcd1234#!@")
+                .ativo()
+                .build();
+
+        // when
+        usuario.desativar();
+
+        // then
+        assertFalse(usuario.getAtivo(), "O usuário deveria estar desativado");
     }
 }
